@@ -1,5 +1,11 @@
 import { useNavigate, Outlet } from "react-router-dom";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import {
+  PlusCircleIcon,
+  Cog8ToothIcon,
+  ChartBarIcon,
+  BanknotesIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/solid";
 
 export default function AppLayout() {
   const navigate = useNavigate();
@@ -13,12 +19,20 @@ export default function AppLayout() {
 
       {/* Bottom Navigation */}
       <nav className="relative h-14 bg-white border-gray-300 border-t flex justify-around items-center text-gray-600">
-        <button onClick={() => navigate("/")}>🏠</button>
-        <button onClick={() => navigate("/expenses")}>💸</button>
-        <button onClick={() => navigate("/budget")}>📊</button>
-        <button onClick={() => navigate("/settings")}>⚙️</button>
+        <button onClick={() => navigate("/")}>
+          <BanknotesIcon className="w-6 h-6" />
+        </button>
+        <button onClick={() => navigate("/expenses")}>
+          <QuestionMarkCircleIcon className="w-6 h-6" />
+        </button>
+        <button onClick={() => navigate("/budget")}>
+          <ChartBarIcon className="w-6 h-6" />
+        </button>
+        <button onClick={() => navigate("/settings")}>
+          <Cog8ToothIcon className="w-6 h-6" />
+        </button>
         {/* nested button */}
-        <button className="absolute -top-19 right-3 w-16 h-16 rounded-full bg-bran flex items-center justify-center text-blue-500">
+        <button className="absolute -top-17 right-3 w-14 h-14 rounded-full bg-bran flex items-center justify-center text-blue-500">
           <PlusCircleIcon />
         </button>
       </nav>
