@@ -11,7 +11,7 @@ export default function SettingModalLayout({ title, children }: Props) {
 
   return (
     <div className="space-y-6">
-      <header className="flex justify-between ">
+      <header className="flex justify-between items-start">
         <button
           onClick={() => navigate(-1)} // 이전 페이지로 이동
           className="p-1 rounded hover:bg-gray-100"
