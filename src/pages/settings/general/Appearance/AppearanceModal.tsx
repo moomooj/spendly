@@ -1,7 +1,8 @@
-import { useTheme } from "./useTheme";
+import { useThemeStore } from "./store";
 import SettingModalLayout from "@/components/settings/SettingModalLayout";
+
 export default function AppearanceModal() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useThemeStore();
 
   return (
     <div className="space-y-6 ">

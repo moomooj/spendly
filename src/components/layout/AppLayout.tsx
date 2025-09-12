@@ -1,8 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import BottomNav from "./BottomNav";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function AppLayout() {
+  useTheme();
   return (
     <div className="flex flex-col h-screen bg-gray-50 max-w-3xl mx-auto w-full">
       {/* Main Content */}

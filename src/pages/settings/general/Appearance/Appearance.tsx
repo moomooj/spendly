@@ -1,11 +1,10 @@
 import SettingItem from "@/components/settings/SettingBtn";
-import { useTheme } from "./useTheme";
 import { useNavigate } from "react-router-dom";
+import { useThemeStore } from "./store";
 
 export default function Appearance() {
-  const { theme } = useTheme();
+  const { theme } = useThemeStore();
   const navigate = useNavigate();
-  console.log(theme);
 
   const themeLabel =
     theme === "system" ? "System" : theme === "light" ? "Light" : "Dark";
