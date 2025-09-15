@@ -5,6 +5,7 @@ import Insights from "./pages/insights/Insights";
 import Settings from "@/pages/settings/Settings";
 import SettingsLayout from "@/components/layout/SettingsLayout";
 import AppearancePage from "./pages/settings/general/Appearance/AppearanceModal";
+import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <SettingsLayout />,
-    children: [{ path: "appearance", element: <AppearancePage /> }],
+    children: [
+      { path: "appearance", element: <AppearancePage /> },
+      { path: "notifications", element: <Notifications /> },
+    ],
   },
 ]);
 

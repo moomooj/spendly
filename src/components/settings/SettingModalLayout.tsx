@@ -16,10 +16,12 @@ export default function SettingModalLayout({ title, children }: Props) {
           onClick={() => navigate(-1)} // 이전 페이지로 이동
           className="p-1 rounded hover:bg-gray-100"
         >
-          <ChevronLeftIcon className="w-6 h-6 text-gray-700" />
+          <ChevronLeftIcon className="w-6 h-6 text-Sly-grey-900 dark:text-white" />
         </button>
 
-        <h1 className=" text-2xl font-bold text-gray-900">{title}</h1>
+        <h1 className=" text-2xl font-bold text-Sly-grey-900 dark:text-white">
+          {title}
+        </h1>
         <div className="w-10" />
       </header>
 

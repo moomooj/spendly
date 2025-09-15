@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-Sly-Text: #333d4b;
 
@@ -10,6 +12,8 @@
 
   --color-Sly-bg: #f2f4f6;
   --color-Sly-D-bg: #101013;
+
+  --color-Sly-blue: #348ff9;
 }
 
 /*

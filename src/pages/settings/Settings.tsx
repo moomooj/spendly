@@ -1,4 +1,5 @@
 import Appearance from "./general/Appearance/Appearance";
+import Notifications from "./general/Notifications/Notifications";
 
 export default function Settings() {
   return (
@@ -8,6 +9,7 @@ export default function Settings() {
 
       <section className="bg-white dark:bg-Sly-grey-900 text-Sly-Text dark:text-white rounded-lg p-3 space-y-4 ">
         <Appearance />
+        <Notifications />
       </section>
     </div>
   );

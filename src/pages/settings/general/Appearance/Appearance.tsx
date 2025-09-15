@@ -1,13 +1,10 @@
 import SettingItem from "@/components/settings/SettingBtn";
 import { useNavigate } from "react-router-dom";
-import { useThemeStore } from "./store";
+import { useTheme } from "./useDarkMode";
 
 export default function Appearance() {
-  const { theme } = useThemeStore();
   const navigate = useNavigate();
-
-  const themeLabel =
-    theme === "system" ? "System" : theme === "light" ? "Light" : "Dark";
+  const { theme } = useTheme();
 
   return (
     <>
@@ -19,29 +16,7 @@ export default function Appearance() {
         }
         label="Appearance"
         buttonType="text"
-        SettingText={themeLabel}
-        onClick={() => navigate("/settings/appearance")}
-      />{" "}
-      <SettingItem
-        icon={
-          <span role="img" aria-label="appearance">
-            🎨
-          </span>
-        }
-        label="next1"
-        buttonType="text"
-        SettingText={"next1"}
-        onClick={() => navigate("/settings/appearance")}
-      />
-      <SettingItem
-        icon={
-          <span role="img" aria-label="appearance">
-            🎨
-          </span>
-        }
-        label="next1"
-        buttonType="text"
-        SettingText={"next1"}
+        SettingText={theme}
         onClick={() => navigate("/settings/appearance")}
       />
     </>
