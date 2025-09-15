@@ -3,6 +3,11 @@ import { tabs } from "@/components/layout/tabs";
 
 export default function Header() {
   const location = useLocation();
+  const pathname = location.pathname;
+
+  if (pathname.startsWith("/settings/") && pathname !== "/settings") {
+    return null;
+  }
 
   return (
     <header className=" flex justify-between items-center mb-6">

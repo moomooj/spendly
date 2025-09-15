@@ -21,7 +21,6 @@ export function useTheme() {
         else root.classList.remove("dark");
       }
     };
-
     applyTheme(theme);
 
     localStorage.setItem("theme", theme);
