@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme {
+  --color-Sly-Text: #333d4b;
+
+  --color-Sly-grey-300: #b0b8c1;
+  --color-Sly-grey-500: #4e5968;
+  --color-Sly-grey-700: #62626d;
+  --color-Sly-grey-900: #17171c;
+
+  --color-Sly-bg: #f2f4f6;
+  --color-Sly-D-bg: #101013;
+}
+
+/*
+Light-Mode 
+    text :  #333d4b,
+    bg : #FFF,
+
+
+Dark-Mode
+    text : #FFF,
+    bg : #101013
+*/

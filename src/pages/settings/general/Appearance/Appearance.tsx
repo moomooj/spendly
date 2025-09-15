@@ -10,16 +10,40 @@ export default function Appearance() {
     theme === "system" ? "System" : theme === "light" ? "Light" : "Dark";
 
   return (
-    <SettingItem
-      icon={
-        <span role="img" aria-label="appearance">
-          🎨
-        </span>
-      }
-      label="Appearance"
-      buttonType="text"
-      SettingText={themeLabel}
-      onClick={() => navigate("/settings/appearance")}
-    />
+    <>
+      <SettingItem
+        icon={
+          <span role="img" aria-label="appearance">
+            🎨
+          </span>
+        }
+        label="Appearance"
+        buttonType="text"
+        SettingText={themeLabel}
+        onClick={() => navigate("/settings/appearance")}
+      />{" "}
+      <SettingItem
+        icon={
+          <span role="img" aria-label="appearance">
+            🎨
+          </span>
+        }
+        label="next1"
+        buttonType="text"
+        SettingText={"next1"}
+        onClick={() => navigate("/settings/appearance")}
+      />
+      <SettingItem
+        icon={
+          <span role="img" aria-label="appearance">
+            🎨
+          </span>
+        }
+        label="next1"
+        buttonType="text"
+        SettingText={"next1"}
+        onClick={() => navigate("/settings/appearance")}
+      />
+    </>
   );
 }

@@ -16,14 +16,14 @@ export default function SettingItem({
   onClick,
 }: SettingItemProps) {
   return (
-    <div onClick={onClick} className="flex items-center">
+    <div onClick={onClick} className="flex items-center ">
       {/* Icon Placeholder */}
-      <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-amber-200 mr-2">
+      <div className="w-11 h-10 flex items-center justify-center rounded-lg bg-amber-200 mr-2">
         {icon}
       </div>
 
-      <div className="flex w-full items-center justify-between">
-        <p className="text-sm font-medium text-gray-800">{label}</p>
+      <div className="flex w-full items-center justify-between ">
+        <p className="text-sm font-medium ">{label}</p>
         {buttonType == "toggle" ? (
           "NEED TO BE TOGGLE BTN"
         ) : (
