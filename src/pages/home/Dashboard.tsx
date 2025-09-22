@@ -1,12 +1,19 @@
-import data from "@/data/dummy.json";
+import { categories, transactions } from "@/data/dummy.json";
+import { useFormatDate } from "@/hooks/useFormatDate";
 
 export default function Dashboard() {
+  const { formatDate } = useFormatDate();
+
   return (
     <div>
-      <h1>
-        여기는 토탈 머니가 들어가야함 기능은 오늘, 한달, 년, 기간에 따라 토탈
-        머니가 보여야 함
-      </h1>
+      <h1>need to be total money!</h1>
+      <div>
+        {transactions.map((t, i) => (
+          <div key={i} className="text-gray-500">
+            {formatDate(t.date)}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
