@@ -11,10 +11,13 @@ export default function Header() {
 
   return (
     <>
-      {tabs.map((tab) => {
+      {tabs.map((tab, index) => {
         const isActive = location.pathname === tab.path;
         return isActive && tab.header ? (
-          <header className=" flex justify-between items-center mb-6">
+          <header
+            key={index}
+            className=" flex justify-between items-center mb-6"
+          >
             <h1 className="text-2xl font-bold ">{tab.header}</h1>
           </header>
         ) : null;

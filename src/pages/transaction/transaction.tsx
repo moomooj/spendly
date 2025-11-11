@@ -25,7 +25,7 @@ export default function TransactionForm() {
   const formattedAmount = `$${amount}`;
 
   return (
-    <div className="flex flex-col items-center bg-white min-h-screen p-5">
+    <div className="flex flex-col items-center bg-white min-h-screen">
       {/* 상단 헤더 */}
       <div className="flex justify-between items-center w-full mb-6">
         {/* 닫기 버튼 */}
