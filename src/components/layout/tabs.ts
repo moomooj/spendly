@@ -3,11 +3,13 @@ import {
   QuestionMarkCircleIcon,
   ChartBarIcon,
   Cog8ToothIcon,
-} from "@heroicons/react/24/solid";
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 
 export const tabs = [
-  { path: "/", icon: BanknotesIcon, header: "Spendly" },
+  { path: "/", icon: BanknotesIcon, header: false },
   { path: "/expenses", icon: QuestionMarkCircleIcon, header: "Expenses" },
+  { path: "/transaction", icon: PlusIcon, header: false, center: true },
   { path: "/insights", icon: ChartBarIcon, header: "Insights" },
   { path: "/settings", icon: Cog8ToothIcon, header: "Settings" },
 ];
