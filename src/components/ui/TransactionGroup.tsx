@@ -21,12 +21,10 @@ export default function TransactionGroup({
 
   return (
     <div>
-      {/* 날짜 헤더 */}
       <p className="text-gray-400 text-xs font-semibold uppercase tracking-wide mb-2">
         {formatDate(date)}
       </p>
 
-      {/* 거래 리스트 */}
       <div className="space-y-3">
         {transactions.map((tx) => (
           <TransactionItem
