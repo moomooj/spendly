@@ -10,14 +10,15 @@ import {
 import { createTransaction } from "./transactionApi";
 import { useNavigate } from "react-router-dom";
 import Category from "./Category";
+import { type ICategory } from "./useCategories";
 
 export default function TransactionForm() {
   const [type, setType] = useState<"expense" | "income">("expense");
   const [amount, setAmount] = useState("0");
-  const [note, setNote] = useState("");
   const [date, setDate] = useState(Date.now());
-  const [category, setCategory] = useState(4);
   const [categoryModal, setCategoryModal] = useState(false);
+
+  const [category, setCategory] = useState<ICategory | null>(null);
 
   const navigate = useNavigate();
 
@@ -35,16 +36,16 @@ export default function TransactionForm() {
   const handleSubmit = async () => {
     const transactionAmount = parseFloat(amount);
     if (isNaN(transactionAmount) || transactionAmount <= 0) {
-      alert("유효한 금액을 입력해주세요.");
+      alert("invalid number.");
       return;
     }
 
     const transactionData = {
       type: type,
       amount: transactionAmount,
-      note: note,
+      note: category?.note,
       date: date,
-      category: category,
+      category: category?.id,
     };
 
     try {
@@ -121,14 +122,23 @@ export default function TransactionForm() {
             <span>19:35</span>
           </div>
           {categoryModal ? (
-            <Category />
+            <Category
+              setCategory={setCategory}
+              setCategoryModal={setCategoryModal}
+            />
           ) : (
             <div
               onClick={() => setCategoryModal(true)}
               className="flex items-center gap-2 text-gray-400 border-1 rounded-md  p-1"
             >
-              <TagIcon className="w-5 h-5" />
-              <span>Category</span>
+              {category?.name ? (
+                category.name
+              ) : (
+                <>
+                  <TagIcon className="w-5 h-5" />
+                  <span> "Category"</span>
+                </>
+              )}
             </div>
           )}
         </div>
