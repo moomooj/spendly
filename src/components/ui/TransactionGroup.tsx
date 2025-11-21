@@ -9,11 +9,11 @@ export default function TransactionGroup({
   const { formatDate } = useFormatDate();
 
   return (
-    <div>
-      <p className="text-gray-400 text-xs font-semibold uppercase tracking-wide pb-2 border-b border-gray-100">
+    <div className="mb-3">
+      <p className="text-gray-400 text-xs font-semibold uppercase tracking-wide pb-2 border-b border-gray-300">
         {formatDate(date)}
       </p>
-      <div className="space-y-3">
+      <div className="space-y-1">
         {transactions.map((tx) => (
           <TransactionItem key={tx._id} transaction={tx} />
         ))}

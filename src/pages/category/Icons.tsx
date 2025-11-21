@@ -1,45 +1,8 @@
+import { iconList } from "@/constants/iconList";
+
 interface IconsProps {
   setIcon: (icon: string | null) => void;
 }
-
-const iconList = [
-  "🍔",
-  "🍕",
-  "☕️",
-  "🚗",
-  "🚌",
-  "✈️",
-  "🏠",
-  "🛒",
-  "🎁",
-  "🎬",
-  "🎵",
-  "⚽️",
-  "💻",
-  "📱",
-  "💡",
-  "💰",
-  "💳",
-  "🧾",
-  "🏥",
-  "💊",
-  "👕",
-  "👠",
-  "💅",
-  "💇‍♀️",
-  "📚",
-  "🎓",
-  "🐶",
-  "🐱",
-  "🌿",
-  "📈",
-  "🍷",
-  "🎉",
-  "💪",
-  "💼",
-  "💄",
-  "🥦",
-];
 
 export default function Icons({ setIcon }: IconsProps) {
   const handleIconClick = (icon: string) => {
@@ -54,9 +17,9 @@ export default function Icons({ setIcon }: IconsProps) {
       >
         <div className="overflow-x-auto pb-2">
           <div className="grid grid-rows-4 grid-flow-col gap-4">
-            {iconList.map((icon) => (
+            {iconList.map((icon, index) => (
               <button
-                key={icon}
+                key={index}
                 onClick={() => handleIconClick(icon)}
                 className="text-3xl rounded-lg hover:bg-gray-200 p-2 transition-colors"
               >
