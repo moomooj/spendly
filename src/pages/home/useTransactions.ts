@@ -1,22 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_BASE } from "@/constants/api";
 import axios, { type AxiosResponse } from "axios";
+import { type ITransactionGroup } from "@/types/common";
 
-export interface ITransaction {
-  _id: string;
-  id: number;
-  type: "expense" | "income";
-  amount: number;
-  note?: string;
-  date: string;
-  createdAt: string;
-  updatedAt: string;
-  categories?: { id: number; name: string };
-}
-
-export async function fetchTransactions(): Promise<ITransaction[]> {
+export async function fetchTransactions(): Promise<ITransactionGroup[]> {
   try {
-    const response: AxiosResponse<ITransaction[]> = await axios.get(
+    const response: AxiosResponse<ITransactionGroup[]> = await axios.get(
       `${API_BASE}/transactions`
     );
 
@@ -27,7 +16,7 @@ export async function fetchTransactions(): Promise<ITransaction[]> {
 }
 
 export function useTransactions() {
-  return useQuery<ITransaction[], Error>({
+  return useQuery<ITransactionGroup[], Error>({
     queryKey: ["transactions"],
     queryFn: fetchTransactions,
     staleTime: 1000 * 60,

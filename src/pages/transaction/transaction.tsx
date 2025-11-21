@@ -17,7 +17,6 @@ export default function TransactionForm() {
   const [amount, setAmount] = useState("0");
   const [date, setDate] = useState(Date.now());
   const [categoryModal, setCategoryModal] = useState(false);
-
   const [category, setCategory] = useState<ICategory | null>(null);
 
   const navigate = useNavigate();
@@ -101,16 +100,17 @@ export default function TransactionForm() {
         </button>
       </div>
 
-      <div className="text-4xl font-semibold mb-3">{formattedAmount}</div>
-
-      {/* note */}
-      <div className="flex items-center text-gray-400 gap-2 mb-6">
-        <PencilSquareIcon className="w-5 h-5" />
-        <input
-          type="text"
-          placeholder="Add Note"
-          className="outline-none border-none text-gray-600 text-sm bg-transparent placeholder-gray-400"
-        />
+      <div className=" flex flex-col justify-center items-center w-full h-dvw">
+        <div className="text-4xl font-semibold mb-3">{formattedAmount}</div>
+        <div className="flex w-full justify-center items-center text-gray-400">
+          <PencilSquareIcon className="w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Add Note"
+            className="focus:outline-none outline-none border-none text-gray-600 text-sm bg-transparent placeholder-gray-400"
+            maxLength={15}
+          />
+        </div>
       </div>
 
       {/* date, category, numbers */}
