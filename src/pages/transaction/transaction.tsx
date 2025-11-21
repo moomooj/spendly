@@ -7,30 +7,48 @@ import {
   PencilSquareIcon,
   CheckIcon,
 } from "@heroicons/react/24/outline";
-import { createTransaction } from "./transactionApi";
+import {
+  useCreateTransaction,
+  useUpdateTransaction,
+} from "@/pages/home/useTransactions";
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Category from "./Category";
 
 import Datepicker from "./Datepicker";
-import type { ICategory } from "@/types/common";
+import type { ICategory, PostTransaction } from "@/types/common";
 
 export default function TransactionForm() {
-  const [type, setType] = useState<"expense" | "income">("expense");
-  const [amount, setAmount] = useState("0");
-  const [note, setNote] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const transactionToEdit = location.state?.transaction;
+
+  const [type, setType] = useState<"expense" | "income">(
+    transactionToEdit?.type || "expense"
+  );
+  const [amount, setAmount] = useState(
+    transactionToEdit?.amount.toString() || "0"
+  );
+  const [note, setNote] = useState(transactionToEdit?.note || "");
 
   const [categoryModal, setCategoryModal] = useState(false);
-  const [category, setCategory] = useState<ICategory | null>(null);
+  const [category, setCategory] = useState<ICategory | null>(
+    transactionToEdit?.category || null
+  );
 
   const [dateModal, setDateModal] = useState(false);
-  const [date, setDate] = useState(new Date());
 
-  const navigate = useNavigate();
+  const [date, setDate] = useState(
+    transactionToEdit ? new Date(transactionToEdit.date) : new Date()
+  );
+
+  const createTransactionMutation = useCreateTransaction();
+  const updateTransactionMutation = useUpdateTransaction();
 
   const handleNumberClick = (num: string) => {
     if (amount === "0" && num !== ".") setAmount(num);
-    else setAmount((prev) => prev + num);
+    else setAmount((prev: string) => prev + num);
   };
 
   /*const handleBackspace = () => {
@@ -51,7 +69,7 @@ export default function TransactionForm() {
       return;
     }
 
-    const transactionData = {
+    const transactionData: PostTransaction = {
       type: type,
       amount: transactionAmount,
       note: note,
@@ -60,17 +78,33 @@ export default function TransactionForm() {
     };
 
     try {
-      await createTransaction(transactionData);
-
-      navigate(-1);
+      if (transactionToEdit) {
+        // 수정 모드 (PUT)
+        updateTransactionMutation.mutate(
+          { id: transactionToEdit.id, data: transactionData },
+          {
+            onSuccess: () => navigate(-1),
+            onError: (error) => alert(`Update failed: ${error.message}`),
+          }
+        );
+      } else {
+        // 생성 모드 (POST)
+        createTransactionMutation.mutate(transactionData, {
+          onSuccess: () => navigate(-1),
+          onError: (error) => alert(`Creation failed: ${error.message}`),
+        });
+      }
     } catch (error) {
       alert(
-        `거래 저장 실패: ${
+        `An unexpected error occurred: ${
           error instanceof Error ? error.message : "알 수 없는 오류"
         }`
       );
     }
   };
+
+  const isProcessing =
+    createTransactionMutation.isPending || updateTransactionMutation.isPending;
 
   return (
     <div className="flex flex-col items-center bg-white min-h-screen py-5 px-3">
@@ -186,9 +220,14 @@ export default function TransactionForm() {
           {/* send req */}
           <button
             onClick={handleSubmit}
-            className="bg-gray-800 text-white rounded-lg text-2xl py-3 flex items-center justify-center"
+            disabled={isProcessing}
+            className="bg-gray-800 text-white rounded-lg text-2xl py-3 flex items-center justify-center disabled:bg-gray-400"
           >
-            <CheckIcon className="w-6 h-6" />
+            {isProcessing ? (
+              <ArrowPathIcon className="w-6 h-6 animate-spin" />
+            ) : (
+              <CheckIcon className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>

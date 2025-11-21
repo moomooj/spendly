@@ -32,3 +32,11 @@ export interface PostICategory {
   color: string;
   type: "expense" | "income";
 }
+
+export interface PostTransaction {
+  type: "expense" | "income";
+  amount: number;
+  note?: string;
+  date: string;
+  category: number;
+}

@@ -1,5 +1,6 @@
 import { useFormatDate } from "@/hooks/useFormatDate";
 import { type ITransaction } from "@/types/common";
+import { useNavigate } from "react-router-dom";
 
 export default function TransactionItem({
   transaction,
@@ -11,9 +12,13 @@ export default function TransactionItem({
     minute: "2-digit",
     hour12: true,
   });
+  const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between items-center py-3 ">
+    <div
+      className="flex justify-between items-center py-3 cursor-pointer"
+      onClick={() => navigate("/transaction", { state: { transaction } })}
+    >
       {/* 왼쪽: 아이콘 + 카테고리 + 시간 */}
       <div className="flex items-center gap-3">
         <p

@@ -55,7 +55,7 @@ export default function NewCategory({
     if (category) {
       // Update existing category
       updateCategoryMutation.mutate(
-        { id: category.id, data: categoryData },
+        { id: category._id, data: categoryData },
         {
           onSuccess: () => {
             setNewCategoryModal(false);
