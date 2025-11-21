@@ -4,23 +4,40 @@ import {
   PlusIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Icons from "./Icons";
 import Colors from "./Colors";
-import { useCreateCategory } from "@/hooks/useCategories";
+import { useCreateCategory, useUpdateCategory } from "@/hooks/useCategories";
+import type { ICategory } from "@/types/common";
 
 interface NewCategoryProps {
+  category?: ICategory;
   setNewCategoryModal: (value: boolean) => void;
 }
 
-export default function NewCategory({ setNewCategoryModal }: NewCategoryProps) {
-  const [type, setType] = useState<"expense" | "income">("expense");
-  const [icon, setIcon] = useState<null | string>(null);
-  const [color, setColor] = useState<string>("#E0FFFF");
-  const [name, setName] = useState<string>("");
+export default function NewCategory({
+  category,
+  setNewCategoryModal,
+}: NewCategoryProps) {
+  const [type, setType] = useState<"expense" | "income">(
+    category?.type || "expense"
+  );
+  const [icon, setIcon] = useState<string | null>(category?.icon || null);
+  const [color, setColor] = useState<string>(category?.color || "#E0FFFF");
+  const [name, setName] = useState<string>(category?.name || "");
   const [showColorModal, setShowColorModal] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (category) {
+      setName(category.name);
+      setIcon(category.icon);
+      setColor(category.color);
+      setType(category.type);
+    }
+  }, [category]);
+
   const createCategoryMutation = useCreateCategory();
+  const updateCategoryMutation = useUpdateCategory();
 
   const handleSubmit = () => {
     if (!name.trim() || !icon || !color) {
@@ -35,20 +52,42 @@ export default function NewCategory({ setNewCategoryModal }: NewCategoryProps) {
       type,
     };
 
-    createCategoryMutation.mutate(categoryData, {
-      onSuccess: () => {
-        setNewCategoryModal(false);
-      },
-      onError: (error) => {
-        alert(
-          `Failed to create category: ${
-            error instanceof Error ? error.message : "Unknown error"
-          }`
-        );
-      },
-    });
+    if (category) {
+      // Update existing category
+      updateCategoryMutation.mutate(
+        { id: category.id, data: categoryData },
+        {
+          onSuccess: () => {
+            setNewCategoryModal(false);
+          },
+          onError: (error) => {
+            alert(
+              `Failed to update category: ${
+                error instanceof Error ? error.message : "Unknown error"
+              }`
+            );
+          },
+        }
+      );
+    } else {
+      // Create new category
+      createCategoryMutation.mutate(categoryData, {
+        onSuccess: () => {
+          setNewCategoryModal(false);
+        },
+        onError: (error) => {
+          alert(
+            `Failed to create category: ${
+              error instanceof Error ? error.message : "Unknown error"
+            }`
+          );
+        },
+      });
+    }
   };
 
+  const isProcessing =
+    createCategoryMutation.isPending || updateCategoryMutation.isPending;
   return (
     <div
       className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-end"
@@ -123,10 +162,10 @@ export default function NewCategory({ setNewCategoryModal }: NewCategoryProps) {
           />
           <button
             onClick={handleSubmit}
-            disabled={createCategoryMutation.isPending}
+            disabled={isProcessing}
             className="w-10 h-10 p-2 bg-Sly-grey-900 rounded-xl text-Sly-bg flex justify-center items-center disabled:bg-Sly-grey-300"
           >
-            {createCategoryMutation.isPending ? (
+            {isProcessing ? (
               <ArrowPathIcon className="w-6 h-6 animate-spin" />
             ) : (
               <PlusIcon className="w-6 h-6" />

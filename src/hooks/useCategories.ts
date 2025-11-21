@@ -51,3 +51,32 @@ export function useCreateCategory() {
     },
   });
 }
+
+/* PUT */
+interface UpdateCategoryData {
+  id: string;
+  data: Partial<PostICategory>;
+}
+
+export async function updateCategory({
+  id,
+  data,
+}: UpdateCategoryData): Promise<ICategory> {
+  try {
+    const response = await axios.put(`${API_BASE}/categories/${id}`, data);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update category. ${error}`);
+  }
+}
+
+export function useUpdateCategory() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
+  });
+}
