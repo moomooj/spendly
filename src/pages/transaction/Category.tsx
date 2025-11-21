@@ -1,6 +1,7 @@
-import { useCategories } from "./useCategories";
-import burgerIcon from "@/data/burger.png";
-import { type ICategory } from "./useCategories";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { useCategories } from "../../hooks/useCategories";
+import { type ICategory } from "@/types/common";
+import { useNavigate } from "react-router-dom";
 
 interface CategoryProps {
   setCategory: (value: ICategory | null) => void;
@@ -12,6 +13,7 @@ export default function Category({
   setCategoryModal,
 }: CategoryProps) {
   const { data, isLoading, isError, error } = useCategories();
+  const navigate = useNavigate();
 
   function handleCategoryClick(index: number) {
     if (data) {
@@ -28,20 +30,27 @@ export default function Category({
     return (
       <div className="fixed inset-0 bg-Sly-grey-500/30 backdrop-blur-sm p-8">
         <div className="flex flex-wrap gap-3 h-full overflow-y-auto overflow-x-hidden content-start">
+          <div className="w-fit bg-white/80 p-2 rounded-lg shadow-md">
+            <div
+              className="flex flex-row items-center justify-center space-x-1"
+              onClick={() => navigate("/categories")}
+            >
+              <PencilSquareIcon className="w-5 h-7" />
+              <span className="font-semibold text-sm text-gray-800">
+                Edit Category
+              </span>
+            </div>
+          </div>
           {data?.map((category, index) => (
             <div
               onClick={() => handleCategoryClick(index)}
               key={category.id}
-              className="w-fit bg-white/80 p-2 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              className="w-fit bg-white/80 p-2 rounded-lg shadow-md"
+              style={{ background: category.color }}
             >
-              <div className="flex flex-row items-center space-x-1">
-                <img
-                  src={burgerIcon}
-                  alt={category.name}
-                  className="w-5 h-5 rounded-full flex-shrink-0"
-                />
-
-                <span className="font-semibold text-sm text-gray-800 whitespace-nowrap">
+              <div className="flex flex-row items-center justify-center space-x-1">
+                <span className="text-xl">{category.icon}</span>
+                <span className="font-semibold text-sm text-gray-800">
                   {category.name}
                 </span>
               </div>

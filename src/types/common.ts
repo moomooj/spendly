@@ -1,3 +1,4 @@
+/*get */
 export interface ITransaction {
   _id: string;
   id: number;
@@ -14,7 +15,6 @@ export interface ICategory {
   _id: string;
   id: number;
   name: string;
-  note?: string;
   color: string;
   icon: string;
   type: "expense" | "income";
@@ -23,4 +23,12 @@ export interface ICategory {
 export interface ITransactionGroup {
   date: string;
   transactions: ITransaction[];
+}
+
+/* POST */
+export interface PostICategory {
+  name: string;
+  icon: string;
+  color: string;
+  type: "expense" | "income";
 }

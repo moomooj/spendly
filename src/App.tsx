@@ -4,8 +4,9 @@ import Dashboard from "@/pages/home/Dashboard";
 import Insights from "./pages/insights/Insights";
 import Settings from "@/pages/settings/Settings";
 import Transaction from "@/pages/transaction/Transaction";
-import AppearancePage from "./pages/settings/general/Appearance/AppearanceModal";
+import AppearancePage from "@/pages/settings/general/Appearance/AppearanceModal";
 import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
+import EditCategory from "@/pages/category/editCategory";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       { path: "settings/appearance", element: <AppearancePage /> },
       { path: "settings/notifications", element: <Notifications /> },
     ],
+  },
+  {
+    path: "categories",
+    element: <EditCategory />,
   },
   {
     path: "transaction",

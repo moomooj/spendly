@@ -8,16 +8,23 @@ import {
   CheckIcon,
 } from "@heroicons/react/24/outline";
 import { createTransaction } from "./transactionApi";
+import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import Category from "./Category";
-import { type ICategory } from "./useCategories";
+
+import Datepicker from "./Datepicker";
+import type { ICategory } from "@/types/common";
 
 export default function TransactionForm() {
   const [type, setType] = useState<"expense" | "income">("expense");
   const [amount, setAmount] = useState("0");
-  const [date, setDate] = useState(Date.now());
+  const [note, setNote] = useState("");
+
   const [categoryModal, setCategoryModal] = useState(false);
   const [category, setCategory] = useState<ICategory | null>(null);
+
+  const [dateModal, setDateModal] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const navigate = useNavigate();
 
@@ -39,12 +46,17 @@ export default function TransactionForm() {
       return;
     }
 
+    if (!category) {
+      alert("Please select a category.");
+      return;
+    }
+
     const transactionData = {
       type: type,
       amount: transactionAmount,
-      note: category?.note,
-      date: date,
-      category: category?.id,
+      note: note,
+      date: format(date, "yyyy-MM-dd'T'HH:mm:ss"), // ISO 8601 형식으로 시간 포함
+      category: category.id,
     };
 
     try {
@@ -106,8 +118,10 @@ export default function TransactionForm() {
           <PencilSquareIcon className="w-5 h-5" />
           <input
             type="text"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
             placeholder="Add Note"
-            className="focus:outline-none outline-none border-none text-gray-600 text-sm bg-transparent placeholder-gray-400"
+            className="focus:outline-none outline-none border-none text-gray-600 text-sm bg-transparent placeholder-gray-400 text-center"
             maxLength={15}
           />
         </div>
@@ -116,11 +130,22 @@ export default function TransactionForm() {
       {/* date, category, numbers */}
       <div className="w-full absolute bottom-5 px-3">
         <div className="flex justify-between  text-gray-500 text-sm ">
-          <div className="flex items-center border-1 rounded-md  p-1">
+          <div
+            onClick={() => setDateModal(true)}
+            className="flex items-center border-1 rounded-md  p-1"
+          >
             <CalendarIcon className="w-5 h-5" />
-            <span>Today, 10 Nov</span>
-            <span>19:35</span>
+            <span>{format(date, "MMM d, yyyy h:mm aa")}</span>
           </div>
+
+          {dateModal ? (
+            <Datepicker
+              setDateModal={setDateModal}
+              date={date}
+              setDate={setDate}
+            />
+          ) : null}
+
           {categoryModal ? (
             <Category
               setCategory={setCategory}
@@ -129,14 +154,19 @@ export default function TransactionForm() {
           ) : (
             <div
               onClick={() => setCategoryModal(true)}
-              className="flex items-center gap-2 text-gray-400 border-1 rounded-md  p-1"
+              className="flex items-center gap-2 px-3 text-gray-400 border-1 rounded-md p-1"
+              style={
+                category?.color
+                  ? { background: category.color, border: "0px" }
+                  : {}
+              }
             >
               {category?.name ? (
-                category.name
+                `${category.icon}    ${category.name}`
               ) : (
                 <>
                   <TagIcon className="w-5 h-5" />
-                  <span> "Category"</span>
+                  <span>Category</span>
                 </>
               )}
             </div>
