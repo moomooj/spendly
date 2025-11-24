@@ -3,11 +3,16 @@ import {
   FaceSmileIcon,
   PlusIcon,
   ArrowPathIcon,
+  TrashIcon,
 } from "@heroicons/react/24/solid";
 import { useState, useEffect } from "react";
 import Icons from "./Icons";
 import Colors from "./Colors";
-import { useCreateCategory, useUpdateCategory } from "@/hooks/useCategories";
+import {
+  useCreateCategory,
+  useUpdateCategory,
+  useDeleteCategory,
+} from "@/hooks/useCategories";
 import type { ICategory } from "@/types/common";
 
 interface NewCategoryProps {
@@ -38,6 +43,7 @@ export default function NewCategory({
 
   const createCategoryMutation = useCreateCategory();
   const updateCategoryMutation = useUpdateCategory();
+  const deleteCategoryMutation = useDeleteCategory();
 
   const handleSubmit = () => {
     if (!name.trim() || !icon || !color) {
@@ -55,7 +61,7 @@ export default function NewCategory({
     if (category) {
       // Update existing category
       updateCategoryMutation.mutate(
-        { id: category._id, data: categoryData },
+        { id: category.id, data: categoryData },
         {
           onSuccess: () => {
             setNewCategoryModal(false);
@@ -86,8 +92,29 @@ export default function NewCategory({
     }
   };
 
+  const handleDelete = () => {
+    if (!category) return;
+
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      deleteCategoryMutation.mutate(category.id, {
+        onSuccess: () => {
+          setNewCategoryModal(false);
+        },
+        onError: (error) => {
+          alert(
+            `Failed to delete category: ${
+              error instanceof Error ? error.message : "Unknown error"
+            }`
+          );
+        },
+      });
+    }
+  };
+
   const isProcessing =
-    createCategoryMutation.isPending || updateCategoryMutation.isPending;
+    createCategoryMutation.isPending ||
+    updateCategoryMutation.isPending ||
+    deleteCategoryMutation.isPending;
   return (
     <div
       className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-end"
@@ -129,7 +156,13 @@ export default function NewCategory({
             </button>
           </div>
 
-          <div></div>
+          {category ? (
+            <button onClick={handleDelete} disabled={isProcessing}>
+              <TrashIcon className="w-6 h-6 text-red-500 hover:text-red-700" />
+            </button>
+          ) : (
+            <div className="w-6 h-6"></div>
+          )}
         </div>
 
         {/* icon */}

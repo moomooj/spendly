@@ -83,3 +83,23 @@ export function useUpdateTransaction() {
     },
   });
 }
+
+/* DELETE - 거래 삭제 */
+export async function deleteTransaction(id: string): Promise<void> {
+  try {
+    await axios.delete(`${API_BASE}/transactions/${id}`);
+  } catch (error) {
+    throw new Error(`Failed to delete transaction. ${error}`);
+  }
+}
+
+export function useDeleteTransaction() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteTransaction,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["total"] });
+    },
+  });
+}

@@ -54,7 +54,7 @@ export function useCreateCategory() {
 
 /* PUT */
 interface UpdateCategoryData {
-  id: string;
+  id: number;
   data: Partial<PostICategory>;
 }
 
@@ -75,6 +75,25 @@ export function useUpdateCategory() {
 
   return useMutation({
     mutationFn: updateCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
+  });
+}
+
+/* DELETE */
+export async function deleteCategory(id: number): Promise<void> {
+  try {
+    await axios.delete(`${API_BASE}/categories/${id}`);
+  } catch (error) {
+    throw new Error(`Failed to delete category. ${error}`);
+  }
+}
+
+export function useDeleteCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },

@@ -6,10 +6,13 @@ import {
   TagIcon,
   PencilSquareIcon,
   CheckIcon,
+  BackspaceIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import {
   useCreateTransaction,
   useUpdateTransaction,
+  useDeleteTransaction,
 } from "@/pages/home/useTransactions";
 import { format } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -45,15 +48,16 @@ export default function TransactionForm() {
 
   const createTransactionMutation = useCreateTransaction();
   const updateTransactionMutation = useUpdateTransaction();
+  const deleteTransactionMutation = useDeleteTransaction();
 
   const handleNumberClick = (num: string) => {
     if (amount === "0" && num !== ".") setAmount(num);
     else setAmount((prev: string) => prev + num);
   };
 
-  /*const handleBackspace = () => {
+  const handleBackspace = () => {
     setAmount((prev) => (prev.length > 1 ? prev.slice(0, -1) : "0"));
-  };*/
+  };
 
   const formattedAmount = `$${amount}`;
 
@@ -103,8 +107,25 @@ export default function TransactionForm() {
     }
   };
 
+  const handleDelete = () => {
+    if (!transactionToEdit) return;
+
+    if (window.confirm("Are you sure you want to delete this transaction?")) {
+      deleteTransactionMutation.mutate(transactionToEdit.id, {
+        onSuccess: () => {
+          navigate(-1);
+        },
+        onError: (error) => {
+          alert(`Deletion failed: ${error.message}`);
+        },
+      });
+    }
+  };
+
   const isProcessing =
-    createTransactionMutation.isPending || updateTransactionMutation.isPending;
+    createTransactionMutation.isPending ||
+    updateTransactionMutation.isPending ||
+    deleteTransactionMutation.isPending;
 
   return (
     <div className="flex flex-col items-center bg-white min-h-screen py-5 px-3">
@@ -140,8 +161,15 @@ export default function TransactionForm() {
           </button>
         </div>
 
-        {/* 교체 아이콘 */}
-        <button className="text-gray-400 hover:text-gray-600 transition">
+        {transactionToEdit && (
+          <button
+            onClick={handleDelete}
+            className="text-red-500  bg-red-100 rounded-full p-1.5 hover:bg-red-200 transition"
+          >
+            <TrashIcon className="w-5 h-5" />
+          </button>
+        )}
+        <button className="text-gray-400 hover:text-gray-600 transition opacity-0">
           <ArrowPathIcon className="w-5 h-5" />
         </button>
       </div>
@@ -207,8 +235,8 @@ export default function TransactionForm() {
           )}
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mt-3">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0].map((num) => (
+        <div className="grid grid-cols-4 gap-3 mt-3">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
             <button
               key={num}
               onClick={() => handleNumberClick(String(num))}
@@ -217,11 +245,30 @@ export default function TransactionForm() {
               {num}
             </button>
           ))}
+
+          <button
+            onClick={() => handleNumberClick("0")}
+            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 hover:bg-gray-200 transition"
+          >
+            0
+          </button>
+          <button
+            onClick={() => handleNumberClick(".")}
+            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 hover:bg-gray-200 transition"
+          >
+            .
+          </button>
+          <button
+            onClick={handleBackspace}
+            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 hover:bg-gray-200 transition flex justify-center items-center"
+          >
+            <BackspaceIcon className="w-7 h-7" />
+          </button>
           {/* send req */}
           <button
             onClick={handleSubmit}
             disabled={isProcessing}
-            className="bg-gray-800 text-white rounded-lg text-2xl py-3 flex items-center justify-center disabled:bg-gray-400"
+            className="bg-gray-800 text-white rounded-lg text-2xl py-3 flex items-center justify-center disabled:bg-gray-400 col-span-4"
           >
             {isProcessing ? (
               <ArrowPathIcon className="w-6 h-6 animate-spin" />
