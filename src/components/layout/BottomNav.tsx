@@ -6,7 +6,7 @@ export default function BottomNav() {
   const navigate = useNavigate();
 
   return (
-    <nav className="relative h-18 bg-Sly-bg dark:bg-Sly-D-bg text-Sly-Text dark:text-white border-Sly-grey-900 dark:border-Sly-grey-700 flex justify-around items-center z-50">
+    <nav className="relative h-18 bg-Sly-bg dark:bg-Sly-grey-900  text-Sly-Textdark:text-white flex justify-around items-center z-50">
       {tabs.map((tab) => {
         const isActive = location.pathname === tab.path;
         const Icon = tab.icon;
@@ -16,7 +16,7 @@ export default function BottomNav() {
             onClick={() => navigate(tab.path)}
             className={
               tab.center
-                ? "bg-Sly-grey-900 px-8 py-3 rounded-2xl text-white font-extrabold"
+                ? "bg-Sly-grey-900 dark:bg-Sly-blue px-8 py-3 rounded-2xl text-white font-extrabold"
                 : isActive
                 ? "dark:text-white"
                 : "text-Sly-grey-300 dark:text-Sly-grey-700"

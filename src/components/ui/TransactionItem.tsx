@@ -42,7 +42,7 @@ export default function TransactionItem({
         className={`font-semibold text-sm ${
           transaction.type === "expense"
             ? "text-shadow-Sly-D-bg"
-            : "text-green-400"
+            : "text-Sly-blue"
         }`}
       >
         {transaction.type === "expense" ? "-" : "+"}$
