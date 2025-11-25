@@ -1,4 +1,6 @@
-export const currencyList = [
+import type { TCurrency } from "@/types/common";
+
+export const currencyList: TCurrency[] = [
   { code: "USD", name: "United States Dollar", symbol: "$" },
   { code: "CAD", name: "Canadian Dollar", symbol: "$" },
   { code: "EUR", name: "Euro", symbol: "€" },

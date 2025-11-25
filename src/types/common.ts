@@ -77,3 +77,9 @@ export interface InsightSingle {
   transactions: ITransaction[];
   chart: ITransaction[];
 }
+
+export type TCurrency = {
+  code: string;
+  name: string;
+  symbol: string;
+};

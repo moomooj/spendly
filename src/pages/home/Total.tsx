@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useTotal } from "./hooks/useTotal";
 import type { Period } from "@/types/common";
 import { periods } from "@/constants/periods";
+import useCurrencyStore from "@/store/currencyStore";
 
 export default function Total() {
   const [period, setPeriod] = useState<Period>("today");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { data, isLoading, isError } = useTotal(period);
+  const { selectedCurrency } = useCurrencyStore();
 
   if (isLoading) {
     return (
@@ -59,8 +61,9 @@ export default function Total() {
         </div>
 
         <div className="text-5xl mt-2">
-          $
-          {data.total.toLocaleString(undefined, {
+          {data.total < 0 && "-"}
+          {selectedCurrency.symbol}
+          {Math.abs(data.total).toLocaleString(undefined, {
             minimumFractionDigits: 2,
           })}
         </div>

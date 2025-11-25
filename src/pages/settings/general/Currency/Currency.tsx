@@ -1,9 +1,9 @@
-import { useState } from "react";
 import SettingModalLayout from "@/components/settings/SettingModalLayout";
 import { currencyList } from "@/constants/currencyList";
+import useCurrencyStore from "@/store/currencyStore";
 
 export default function CurrencyModal() {
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const { selectedCurrency, setSelectedCurrency } = useCurrencyStore();
 
   return (
     <div className="space-y-6">
@@ -14,9 +14,9 @@ export default function CurrencyModal() {
               {currencyList.map((currency) => (
                 <li
                   key={currency.code}
-                  onClick={() => setSelectedCurrency(currency.code)}
+                  onClick={() => setSelectedCurrency(currency)}
                   className={`py-3 flex justify-between cursor-pointer text-Sly-Text dark:text-gray-200 ${
-                    selectedCurrency === currency.code
+                    selectedCurrency.code === currency.code
                       ? "text-Sly-blue dark:text-Sly-blue font-semibold"
                       : ""
                   }`}
@@ -24,7 +24,7 @@ export default function CurrencyModal() {
                   <div className="flex">
                     <span
                       className={`mr-3 font-semibold ${
-                        selectedCurrency === currency.code
+                        selectedCurrency.code === currency.code
                           ? "text-Sly-blue dark:text-Sly-blue"
                           : "text-Sly-grey-500 dark:text-Sly-grey-300"
                       }`}
