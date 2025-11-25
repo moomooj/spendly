@@ -21,15 +21,13 @@ interface InsightResponse {
   income: Insight[];
 }
 
-export type InsightType = "expense" | "income";
-
 //GET
 const fetchInsights = async (): Promise<InsightResponse> => {
   const { data } = await axios.get<InsightResponse>(`${API_BASE}/insights`);
   return data;
 };
 
-export const useInsights = (type: InsightType = "expense") => {
+export const useInsights = () => {
   const {
     data,
     isLoading: loading,
@@ -40,5 +38,7 @@ export const useInsights = (type: InsightType = "expense") => {
     queryFn: fetchInsights,
   });
 
-  return { data: data?.[type], loading, error: isError ? error.message : null };
+  console.log(data);
+
+  return { data: data, loading, error: isError ? error.message : null };
 };

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { useInsights, type InsightType } from "./useInsights";
+import { useInsights } from "./useInsights";
 import { periods } from "@/constants/periods";
 import type { Period } from "@/types/common";
+
+export type InsightType = "expense" | "income";
 
 export default function Insights() {
   const { data: categoryData, loading, error } = useInsights();
@@ -17,8 +19,10 @@ export default function Insights() {
     return <div>Error: {error}</div>;
   }
 
+  const currentData = categoryData?.[insightType];
+
   const totalAmount =
-    categoryData?.reduce((sum, category) => sum + category.amount, 0) || 0;
+    currentData?.reduce((sum, category) => sum + category.amount, 0) || 0;
 
   return (
     <div>
@@ -84,7 +88,7 @@ export default function Insights() {
         <div className="relative flex justify-center items-center my-10">
           <PieChart width={256} height={256}>
             <Pie
-              data={categoryData}
+              data={currentData}
               cx="50%"
               cy="50%"
               innerRadius={105}
@@ -93,7 +97,7 @@ export default function Insights() {
               paddingAngle={4}
               dataKey="amount"
             >
-              {categoryData?.map((entry) => (
+              {currentData?.map((entry) => (
                 <Cell key={`cell-${entry.id}`} fill={entry.color} />
               ))}
             </Pie>
@@ -111,7 +115,7 @@ export default function Insights() {
 
         {/* Category Breakdown */}
         <div>
-          {categoryData?.map((category) => (
+          {currentData?.map((category) => (
             <div
               key={category.id}
               className=" flex items-center justify-between p-2"
