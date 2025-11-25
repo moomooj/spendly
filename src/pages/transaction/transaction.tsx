@@ -30,8 +30,8 @@ export default function TransactionForm() {
   const [type, setType] = useState<"expense" | "income">(
     transactionToEdit?.type || "expense"
   );
-  const [amount, setAmount] = useState(
-    transactionToEdit?.amount.toString() || "0"
+  const [amountInCents, setAmountInCents] = useState(
+    transactionToEdit ? Math.round(transactionToEdit.amount * 100) : 0
   );
   const [note, setNote] = useState(transactionToEdit?.note || "");
 
@@ -51,20 +51,29 @@ export default function TransactionForm() {
   const deleteTransactionMutation = useDeleteTransaction();
 
   const handleNumberClick = (num: string) => {
-    if (amount === "0" && num !== ".") setAmount(num);
-    else setAmount((prev: string) => prev + num);
+    const newAmount = amountInCents * 10 + parseInt(num, 10);
+    // 99,999,999.99 is 9999999999 cents
+    if (newAmount > 9999999999) {
+      return;
+    }
+    setAmountInCents(newAmount);
   };
 
   const handleBackspace = () => {
-    setAmount((prev) => (prev.length > 1 ? prev.slice(0, -1) : "0"));
+    setAmountInCents((prev) => Math.floor(prev / 10));
   };
 
-  const formattedAmount = `$${amount}`;
+  const formattedAmount = `$${(amountInCents / 100).toFixed(2)}`;
 
   const handleSubmit = async () => {
-    const transactionAmount = parseFloat(amount);
+    const transactionAmount = amountInCents / 100;
     if (isNaN(transactionAmount) || transactionAmount <= 0) {
       alert("invalid number.");
+      return;
+    }
+
+    if (transactionAmount > 99999999) {
+      alert("The maximum amount is 99,999,999.");
       return;
     }
 
@@ -235,7 +244,8 @@ export default function TransactionForm() {
           )}
         </div>
 
-        <div className="grid grid-cols-4 gap-3 mt-3">
+        <div className="grid grid-cols-3 gap-3 mt-3">
+          {/* Numbers 1-9 */}
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
             <button
               key={num}
@@ -246,29 +256,27 @@ export default function TransactionForm() {
             </button>
           ))}
 
+          {/* Backspace */}
+          <button
+            onClick={handleBackspace}
+            className="text-2xl font-medium bg-Sly-grey-500 rounded-lg py-5 flex justify-center items-center"
+          >
+            <BackspaceIcon className="w-7 h-7 text-white" />
+          </button>
+
+          {/* Number 0 */}
           <button
             onClick={() => handleNumberClick("0")}
-            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 hover:bg-gray-200 transition"
+            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 "
           >
             0
           </button>
-          <button
-            onClick={() => handleNumberClick(".")}
-            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 hover:bg-gray-200 transition"
-          >
-            .
-          </button>
-          <button
-            onClick={handleBackspace}
-            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 hover:bg-gray-200 transition flex justify-center items-center"
-          >
-            <BackspaceIcon className="w-7 h-7" />
-          </button>
-          {/* send req */}
+
+          {/* Submit Button */}
           <button
             onClick={handleSubmit}
             disabled={isProcessing}
-            className="bg-gray-800 text-white rounded-lg text-2xl py-3 flex items-center justify-center disabled:bg-gray-400 col-span-4"
+            className="bg-Sly-grey-500 text-white rounded-lg py-5 flex items-center justify-center "
           >
             {isProcessing ? (
               <ArrowPathIcon className="w-6 h-6 animate-spin" />

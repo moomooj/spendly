@@ -22,8 +22,6 @@ export default function InsightsDetail() {
   const chart = category?.chart || [];
   const navigate = useNavigate();
 
-  console.log(category);
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -131,7 +129,7 @@ export default function InsightsDetail() {
             <div className="grid grid-cols-3 divide-x divide-gray-200 text-center">
               <div className="px-2">
                 <div className="text-sm text-gray-500">Total</div>
-                <div className="text-lg font-bold text-gray-800">
+                <div className="text-sm font-bold text-gray-800">
                   {category.amount < 0 ? "-$" : "$"}
                   {Math.abs(category.amount).toLocaleString(undefined, {
                     maximumFractionDigits: 0,
@@ -140,13 +138,13 @@ export default function InsightsDetail() {
               </div>
               <div className="px-2">
                 <div className="text-sm text-gray-500">Transactions</div>
-                <div className="text-lg font-bold text-gray-800">
+                <div className="text-sm font-bold text-gray-800">
                   {category.transactionsCount}
                 </div>
               </div>
               <div className="px-2">
                 <div className="text-sm text-gray-500">Average</div>
-                <div className="text-lg font-bold text-gray-800">
+                <div className="text-sm font-bold text-gray-800">
                   $
                   {category.averageTransaction.toLocaleString(undefined, {
                     maximumFractionDigits: 0,
