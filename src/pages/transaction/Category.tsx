@@ -28,7 +28,10 @@ export default function Category({
     return <div>can't load categories : {error.message}</div>;
   } else
     return (
-      <div className="fixed inset-0 bg-Sly-grey-500/30 backdrop-blur-sm p-8">
+      <div
+        onClick={() => setCategoryModal(false)}
+        className="fixed inset-0 bg-Sly-grey-500/30 backdrop-blur-sm p-8"
+      >
         <div className="flex flex-wrap gap-3 h-full overflow-y-auto overflow-x-hidden content-start">
           <div className="w-fit bg-white/80 p-2 rounded-lg shadow-md">
             <div

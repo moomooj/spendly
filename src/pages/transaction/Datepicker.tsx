@@ -19,7 +19,7 @@ export default function Datepicker({
 
   return (
     <div
-      className="fixed w-full h-full inset-0 bg-gray-500/30 backdrop-blur-sm flex justify-center items-center"
+      className="fixed w-full h-full inset-0 bg-gray-500/90 dark:bg-black/50 backdrop-blur-sm flex justify-center items-center z-30"
       onClick={() => setDateModal(false)}
     >
       <div onClick={(e) => e.stopPropagation()}>

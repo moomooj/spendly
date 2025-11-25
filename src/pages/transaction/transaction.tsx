@@ -137,23 +137,23 @@ export default function TransactionForm() {
     deleteTransactionMutation.isPending;
 
   return (
-    <div className="flex flex-col items-center bg-white min-h-screen py-5 px-3">
+    <div className="flex flex-col items-center bg-white dark:bg-Sly-D-bg text-Sly-Text dark:text-gray-200 min-h-screen py-5 px-3">
       <div className="flex justify-between items-center w-full mb-6">
         <button
           onClick={() => navigate(-1)}
-          className="text-gray-400 hover:text-gray-600 transition"
+          className="text-Sly-grey-500 dark:text-Sly-grey-300 hover:text-gray-600 transition"
         >
           <XMarkIcon className="w-6 h-6" />
         </button>
 
         {/* Expense / Income toggle */}
-        <div className="flex bg-gray-100 rounded-full p-1">
+        <div className="flex bg-gray-100 dark:bg-Sly-grey-900 rounded-full p-1">
           <button
             onClick={() => setType("expense")}
             className={`px-4 py-1 rounded-full text-sm font-medium ${
               type === "expense"
-                ? "bg-white shadow text-gray-900"
-                : "text-gray-400"
+                ? "bg-white dark:bg-Sly-grey-700 shadow text-Sly-Text dark:text-gray-200"
+                : "text-Sly-grey-500"
             }`}
           >
             Expense
@@ -162,8 +162,8 @@ export default function TransactionForm() {
             onClick={() => setType("income")}
             className={`px-4 py-1 rounded-full text-sm font-medium ${
               type === "income"
-                ? "bg-white shadow text-gray-900"
-                : "text-gray-400"
+                ? "bg-white dark:bg-Sly-grey-700 shadow text-Sly-Text dark:text-gray-200"
+                : "text-Sly-grey-500"
             }`}
           >
             Income
@@ -173,12 +173,12 @@ export default function TransactionForm() {
         {transactionToEdit && (
           <button
             onClick={handleDelete}
-            className="text-red-500  bg-red-100 rounded-full p-1.5 hover:bg-red-200 transition"
+            className="text-red-500 bg-red-100 dark:bg-red-900/20 rounded-full p-1.5 hover:bg-red-200 dark:hover:bg-red-900/40 transition"
           >
             <TrashIcon className="w-5 h-5" />
           </button>
         )}
-        <button className="text-gray-400 hover:text-gray-600 transition opacity-0">
+        <button className="text-Sly-grey-500 hover:text-gray-600 transition opacity-0">
           <ArrowPathIcon className="w-5 h-5" />
         </button>
       </div>
@@ -186,13 +186,13 @@ export default function TransactionForm() {
       <div className=" flex flex-col justify-center items-center w-full h-dvw">
         <div className="text-4xl font-semibold mb-3">{formattedAmount}</div>
         <div className="flex w-full justify-center items-center text-gray-400">
-          <PencilSquareIcon className="w-5 h-5" />
+          <PencilSquareIcon className="w-5 h-5 text-Sly-grey-500 dark:text-Sly-grey-300" />
           <input
             type="text"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder="Add Note"
-            className="focus:outline-none outline-none border-none text-gray-600 text-sm bg-transparent placeholder-gray-400 text-center"
+            className="focus:outline-none outline-none border-none text-Sly-grey-700 dark:text-gray-200 text-sm bg-transparent placeholder-gray-400 dark:placeholder-Sly-grey-500 text-center"
             maxLength={15}
           />
         </div>
@@ -200,10 +200,10 @@ export default function TransactionForm() {
 
       {/* date, category, numbers */}
       <div className="w-full absolute bottom-5 px-3">
-        <div className="flex justify-between  text-gray-500 text-sm ">
+        <div className="flex justify-between text-Sly-grey-500 dark:text-Sly-grey-300 text-sm">
           <div
             onClick={() => setDateModal(true)}
-            className="flex items-center border-1 rounded-md  p-1"
+            className="flex items-center border dark:border-Sly-grey-700 rounded-md p-1 cursor-pointer"
           >
             <CalendarIcon className="w-5 h-5" />
             <span>{format(date, "MMM d, yyyy h:mm aa")}</span>
@@ -225,7 +225,7 @@ export default function TransactionForm() {
           ) : (
             <div
               onClick={() => setCategoryModal(true)}
-              className="flex items-center gap-2 px-3 text-black border-1 rounded-md p-1"
+              className="flex items-center gap-2 px-3 text-Sly-Text dark:text-gray-200 border dark:border-Sly-grey-700 rounded-md p-1 cursor-pointer"
               style={
                 category?.color
                   ? { background: category.color, border: "0px" }
@@ -250,7 +250,7 @@ export default function TransactionForm() {
             <button
               key={num}
               onClick={() => handleNumberClick(String(num))}
-              className="text-2xl font-medium bg-gray-100 rounded-lg py-5 hover:bg-gray-200 transition"
+              className="text-2xl font-medium bg-gray-100 dark:bg-Sly-grey-900 rounded-lg py-5 hover:bg-gray-200 dark:hover:bg-Sly-grey-700 transition"
             >
               {num}
             </button>
@@ -259,15 +259,15 @@ export default function TransactionForm() {
           {/* Backspace */}
           <button
             onClick={handleBackspace}
-            className="text-2xl font-medium bg-Sly-grey-500 rounded-lg py-5 flex justify-center items-center"
+            className="text-2xl font-medium bg-Sly-Text text-white  dark:bg-gray-500  rounded-lg py-5 flex justify-center items-center   transition"
           >
-            <BackspaceIcon className="w-7 h-7 text-white" />
+            <BackspaceIcon className="w-7 h-7" />
           </button>
 
           {/* Number 0 */}
           <button
             onClick={() => handleNumberClick("0")}
-            className="text-2xl font-medium bg-gray-100 rounded-lg py-5 "
+            className="text-2xl font-medium bg-gray-100 dark:bg-Sly-grey-900  rounded-lg py-5 hover:bg-gray-200 dark:hover:bg-Sly-grey-700 transition"
           >
             0
           </button>
@@ -276,7 +276,7 @@ export default function TransactionForm() {
           <button
             onClick={handleSubmit}
             disabled={isProcessing}
-            className="bg-Sly-grey-500 text-white rounded-lg py-5 flex items-center justify-center "
+            className="bg-Sly-Text text-white  dark:bg-gray-500   rounded-lg py-5 flex items-center justify-center disabled:bg-Sly-grey-700 transition"
           >
             {isProcessing ? (
               <ArrowPathIcon className="w-6 h-6 animate-spin" />
