@@ -22,9 +22,14 @@ const viewOptions: TOptions[] = [
 interface IProps {
   option: TOptions;
   setOption: (value: TOptions) => void;
+  setSearchModal: (value: boolean) => void;
 }
 
-export default function DashboardHeader({ option, setOption }: IProps) {
+export default function DashboardHeader({
+  option,
+  setOption,
+  setSearchModal,
+}: IProps) {
   const [dropDownBox, setDropDownBox] = useState(false);
 
   const handleClickOption = (opt: TOptions) => {
@@ -34,7 +39,10 @@ export default function DashboardHeader({ option, setOption }: IProps) {
   return (
     <div className="flex justify-between items-center mb-4">
       <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-Sly-grey-800">
-        <MagnifyingGlassIcon className="w-5 h-5" />
+        <MagnifyingGlassIcon
+          className="w-5 h-5"
+          onClick={() => setSearchModal(true)}
+        />
       </button>
       {option !== "all" && (
         <>

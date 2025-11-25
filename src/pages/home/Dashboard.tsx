@@ -9,9 +9,11 @@ import Category from "./components/Category";
 import Recurring from "./components/Recurring";
 import UpComing from "./components/UpComing";
 import ByDate from "./components/ByDate";
+import Search from "./components/Search";
 
 export default function Dashboard() {
   const [option, setOption] = useState<TOptions>("all");
+  const [searchModal, setSearchModal] = useState(false);
   const { data, isLoading, isError, error } = useTransactions(option);
 
   if (isLoading) {
@@ -26,7 +28,12 @@ export default function Dashboard() {
     return (
       // Set base text colors for light and dark modes
       <div className="text-Sly-Text dark:text-gray-200">
-        <DashboardHeader option={option} setOption={setOption} />
+        <DashboardHeader
+          option={option}
+          setOption={setOption}
+          setSearchModal={setSearchModal}
+        />
+        {searchModal && <Search setSearchModal={setSearchModal} data={data} />}
         {option === "all" && <AllDashboard data={data} />}
         {option === "expense" && <Expense data={data} />}
         {option === "income" && <Income data={data} />}
