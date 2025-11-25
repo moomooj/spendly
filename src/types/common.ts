@@ -41,6 +41,21 @@ export interface PostTransaction {
   category: number;
 }
 
+export interface Insight {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+  amount: number;
+  percentage: number;
+  transactionsCount: number;
+  averageTransaction: number;
+  transactions: ITransaction[];
+
+  // for recharts type, index signiture
+  [key: string]: string | number | ITransaction[];
+}
+
 export type Period =
   | "today"
   | "this-week"

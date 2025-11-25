@@ -1,25 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_BASE } from "@/constants/api";
-import type { Period } from "@/types/common";
+import type { Insight, Period } from "@/types/common";
 import axios from "axios";
-
-interface Insight {
-  id: number;
-  name: string;
-  icon: string;
-  color: string;
-  amount: number;
-  percentage: number;
-  transactionsCount: number;
-  averageTransaction: number;
-
-  // for recharts type, index signiture
-  [key: string]: string | number;
-}
 
 interface InsightResponse {
   expense: Insight[];
   income: Insight[];
+  total: Insight[];
 }
 
 //GET

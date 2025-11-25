@@ -2,15 +2,20 @@ import { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import { useInsights } from "./useInsights";
 import { periods } from "@/constants/periods";
-import type { Period } from "@/types/common";
+import type { Insight, Period } from "@/types/common";
+import InsightsDetail from "./insightDetail";
 
-export type InsightType = "expense" | "income";
+export type InsightType = "expense" | "income" | "total";
 
 export default function Insights() {
-  const [insightType, setInsightType] = useState<InsightType>("expense");
+  const [selectedCategory, setSelectedCategory] = useState<Insight | null>(
+    null
+  );
+  const [insightType, setInsightType] = useState<InsightType>("total");
   const [period, setPeriod] = useState<Period>("this-month");
   const { data: categoryData, loading, error } = useInsights(period);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -19,18 +24,36 @@ export default function Insights() {
     return <div>Error: {error}</div>;
   }
 
+  const handleCloseDetail = () => {
+    setIsDetailOpen(false);
+  };
+
   const currentData = categoryData?.[insightType];
 
   const totalAmount =
     currentData?.reduce((sum, category) => sum + category.amount, 0) || 0;
 
+  const chartDisplayData =
+    currentData?.filter((category) => category.percentage > 0) || [];
+  const dynamicPaddingAngle = chartDisplayData.length > 1 ? 4 : 0;
+
   return (
     <div>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto ">
         {/* Controls: Toggle and Dropdown */}
         <div className="flex justify-between items-center my-4">
           {/* Expense/Income Toggle */}
           <div className="flex bg-gray-200 rounded-full p-1 text-sm">
+            <button
+              onClick={() => setInsightType("total")}
+              className={`px-4 py-1 font-semibold rounded-full transition-colors duration-300 ${
+                insightType === "total"
+                  ? "bg-white text-gray-800 shadow"
+                  : "bg-transparent text-gray-500"
+              }`}
+            >
+              Total
+            </button>
             <button
               onClick={() => setInsightType("expense")}
               className={`px-4 py-1 font-semibold rounded-full transition-colors duration-300 ${
@@ -88,16 +111,16 @@ export default function Insights() {
         <div className="relative flex justify-center items-center my-10">
           <PieChart width={256} height={256}>
             <Pie
-              data={currentData}
+              data={chartDisplayData}
               cx="50%"
               cy="50%"
-              innerRadius={105}
+              innerRadius={100}
               outerRadius={128}
               fill="#8884d8"
-              paddingAngle={4}
-              dataKey="amount"
+              paddingAngle={dynamicPaddingAngle}
+              dataKey="percentage"
             >
-              {currentData?.map((entry) => (
+              {chartDisplayData.map((entry) => (
                 <Cell key={`cell-${entry.id}`} fill={entry.color} />
               ))}
             </Pie>
@@ -105,10 +128,17 @@ export default function Insights() {
           </PieChart>
           <div className="absolute flex flex-col justify-center items-center">
             <span className="text-gray-500 text-sm">
-              Total {insightType === "expense" ? "Spent" : "Save"}
+              {insightType === "expense"
+                ? "Total Spent"
+                : insightType === "income"
+                ? "Total Income"
+                : "Total"}
             </span>
             <span className="text-3xl font-bold text-gray-800">
-              ${totalAmount.toLocaleString()}
+              {totalAmount < 0 ? "-$" : "$"}
+              {Math.abs(totalAmount).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              })}
             </span>
           </div>
         </div>
@@ -118,6 +148,10 @@ export default function Insights() {
           {currentData?.map((category) => (
             <div
               key={category.id}
+              onClick={() => {
+                setSelectedCategory(category);
+                setIsDetailOpen(true);
+              }}
               className=" flex items-center justify-between p-2"
             >
               <div className="flex items-center gap-4">
@@ -130,10 +164,11 @@ export default function Insights() {
                 </span>
               </div>
               <div className="flex ">
-                <div className="font-bold mr-7 ">
-                  ${category.amount.toFixed(0)}
+                <div className="font-bold mr-7">
+                  {category.amount < 0 ? "-$" : "$"}
+                  {Math.round(Math.abs(category.amount)).toLocaleString()}
                 </div>
-                <div className="font-bold">
+                <div className="font-semibold">
                   {category.percentage < 10 && (
                     <span style={{ visibility: "hidden" }}>0</span>
                   )}
@@ -142,6 +177,15 @@ export default function Insights() {
               </div>
             </div>
           ))}
+
+          {isDetailOpen && selectedCategory && (
+            <InsightsDetail
+              category={selectedCategory}
+              onClose={handleCloseDetail}
+              period={period}
+              setPeriod={setPeriod}
+            />
+          )}
         </div>
       </div>
     </div>

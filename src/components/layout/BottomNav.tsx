@@ -6,7 +6,7 @@ export default function BottomNav() {
   const navigate = useNavigate();
 
   return (
-    <nav className="relative h-18 bg-Sly-bg dark:bg-Sly-D-bg text-Sly-Text dark:text-white border-Sly-grey-900 dark:border-Sly-grey-700 flex justify-around items-center">
+    <nav className="relative h-18 bg-Sly-bg dark:bg-Sly-D-bg text-Sly-Text dark:text-white border-Sly-grey-900 dark:border-Sly-grey-700 flex justify-around items-center z-50">
       {tabs.map((tab) => {
         const isActive = location.pathname === tab.path;
         const Icon = tab.icon;
