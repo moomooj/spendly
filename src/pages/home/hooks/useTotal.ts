@@ -1,13 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { type AxiosResponse } from "axios";
 import { API_BASE } from "@/constants/api";
-
-export type Period =
-  | "today"
-  | "this-week"
-  | "this-month"
-  | "this-year"
-  | "all-time";
+import type { Period } from "@/types/common";
 
 export interface ITotal {
   total: number;

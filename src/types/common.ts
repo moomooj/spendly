@@ -40,3 +40,10 @@ export interface PostTransaction {
   date: string;
   category: number;
 }
+
+export type Period =
+  | "today"
+  | "this-week"
+  | "this-month"
+  | "this-year"
+  | "all-time";

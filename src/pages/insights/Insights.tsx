@@ -1,67 +1,108 @@
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
-
-const mockCategoryData = [
-  {
-    id: 1,
-    name: "Food & Drinks",
-    icon: "🍔",
-    color: "#FFDDC1",
-    amount: 450.75,
-    percentage: 36.5,
-  },
-  {
-    id: 2,
-    name: "Transportation",
-    icon: "🚗",
-    color: "#C1FFD7",
-    amount: 250.0,
-    percentage: 20.2,
-  },
-  {
-    id: 3,
-    name: "Shopping",
-    icon: "🛍️",
-    color: "#D7C1FF",
-    amount: 300.5,
-    percentage: 24.3,
-  },
-  {
-    id: 4,
-    name: "Bills & Utilities",
-    icon: "🧾",
-    color: "#FFC1C1",
-    amount: 233.31,
-    percentage: 18.9,
-  },
-];
+import { useState } from "react";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { useInsights, type InsightType } from "./useInsights";
+import { periods } from "@/constants/periods";
+import type { Period } from "@/types/common";
 
 export default function Insights() {
-  const totalAmount = 1234.56;
+  const { data: categoryData, loading, error } = useInsights();
+  const [insightType, setInsightType] = useState<InsightType>("expense");
+  const [period, setPeriod] = useState<Period>("today");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const totalAmount =
+    categoryData?.reduce((sum, category) => sum + category.amount, 0) || 0;
 
   return (
-    <div className="">
+    <div>
       <div className="max-w-4xl mx-auto">
+        {/* Controls: Toggle and Dropdown */}
+        <div className="flex justify-between items-center my-4">
+          {/* Expense/Income Toggle */}
+          <div className="flex bg-gray-200 rounded-full p-1 text-sm">
+            <button
+              onClick={() => setInsightType("expense")}
+              className={`px-4 py-1 font-semibold rounded-full transition-colors duration-300 ${
+                insightType === "expense"
+                  ? "bg-white text-gray-800 shadow"
+                  : "bg-transparent text-gray-500"
+              }`}
+            >
+              Expense
+            </button>
+            <button
+              onClick={() => setInsightType("income")}
+              className={`px-4 py-1 font-semibold rounded-full transition-colors duration-300 ${
+                insightType === "income"
+                  ? "bg-white text-gray-800 shadow"
+                  : "bg-transparent text-gray-500"
+              }`}
+            >
+              Income
+            </button>
+          </div>
+
+          {/* Time Range Dropdown Skeleton */}
+          <div className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="rounded-lg p-0.5 text-sm px-2 border-gray-300 border capitalize"
+            >
+              {period.replace("-", " ")}
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 top-full mt-2 w-36 bg-white border border-gray-300  shadow-lg z-10">
+                <ul>
+                  {periods.map((p) => (
+                    <li key={p}>
+                      <button
+                        onClick={() => {
+                          setPeriod(p);
+                          setIsDropdownOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm bg-Sly-bg text-gray-70 capitalize"
+                        style={period === p ? {} : { background: "white" }}
+                      >
+                        {p.replace("-", " ")}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Donut Chart and Total Amount */}
         <div className="relative flex justify-center items-center my-10">
           <PieChart width={256} height={256}>
             <Pie
-              data={mockCategoryData}
+              data={categoryData}
               cx="50%"
               cy="50%"
-              innerRadius={100}
-              outerRadius={130}
+              innerRadius={105}
+              outerRadius={128}
               fill="#8884d8"
-              paddingAngle={5}
+              paddingAngle={4}
               dataKey="amount"
             >
-              {mockCategoryData.map((entry) => (
+              {categoryData?.map((entry) => (
                 <Cell key={`cell-${entry.id}`} fill={entry.color} />
               ))}
             </Pie>
             <Tooltip />
           </PieChart>
           <div className="absolute flex flex-col justify-center items-center">
-            <span className="text-gray-500 text-sm">Total Spent</span>
+            <span className="text-gray-500 text-sm">
+              Total {insightType === "expense" ? "Spent" : "Save"}
+            </span>
             <span className="text-3xl font-bold text-gray-800">
               ${totalAmount.toLocaleString()}
             </span>
@@ -70,7 +111,7 @@ export default function Insights() {
 
         {/* Category Breakdown */}
         <div>
-          {mockCategoryData.map((category) => (
+          {categoryData?.map((category) => (
             <div
               key={category.id}
               className=" flex items-center justify-between p-2"
@@ -84,9 +125,14 @@ export default function Insights() {
                   {category.name}
                 </span>
               </div>
-              <div className="flex">
-                <div className="font-bold ">${category.amount.toFixed(2)}</div>
-                <div className="font-bold ml-7">
+              <div className="flex ">
+                <div className="font-bold mr-7 ">
+                  ${category.amount.toFixed(0)}
+                </div>
+                <div className="font-bold">
+                  {category.percentage < 10 && (
+                    <span style={{ visibility: "hidden" }}>0</span>
+                  )}
                   {category.percentage.toFixed(1)}%
                 </div>
               </div>

@@ -1,18 +1,12 @@
 import { useState } from "react";
-import { useTotal, type Period } from "./hooks/useTotal";
+import { useTotal } from "./hooks/useTotal";
+import type { Period } from "@/types/common";
+import { periods } from "@/constants/periods";
 
 export default function Total() {
   const [period, setPeriod] = useState<Period>("today");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { data, isLoading, isError } = useTotal(period);
-
-  const periods: Period[] = [
-    "today",
-    "this-week",
-    "this-month",
-    "this-year",
-    "all-time",
-  ];
 
   if (isLoading) {
     return (
