@@ -40,7 +40,9 @@ export default function TransactionItem({
       {/* 오른쪽: 금액 */}
       <p
         className={`font-semibold text-sm ${
-          transaction.type === "expense" ? "text-red-500" : "text-green-500"
+          transaction.type === "expense"
+            ? "text-shadow-Sly-D-bg"
+            : "text-green-400"
         }`}
       >
         {transaction.type === "expense" ? "-" : "+"}$

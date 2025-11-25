@@ -7,12 +7,15 @@ import Transaction from "@/pages/transaction/Transaction";
 import AppearancePage from "@/pages/settings/general/Appearance/AppearanceModal";
 import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
 import EditCategory from "@/pages/category/EditCategory";
-import InsightsDetail from "@/pages/insights/insightDetail";
+import InsightsDetail from "@/pages/insights/InsightDetail";
+import NotFound from "@/pages/ErrorPage/NotFound";
+import ErrorPage from "@/pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Dashboard /> },
       { path: "insights", element: <Insights /> },
@@ -29,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "transaction",
     element: <Transaction />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

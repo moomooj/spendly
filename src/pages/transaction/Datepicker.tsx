@@ -1,5 +1,6 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./datepicker-custom.css";
 
 interface DatepickerProps {
   setDateModal: (value: boolean) => void;
