@@ -7,9 +7,9 @@ import type { Period } from "@/types/common";
 export type InsightType = "expense" | "income";
 
 export default function Insights() {
-  const { data: categoryData, loading, error } = useInsights();
   const [insightType, setInsightType] = useState<InsightType>("expense");
-  const [period, setPeriod] = useState<Period>("today");
+  const [period, setPeriod] = useState<Period>("this-month");
+  const { data: categoryData, loading, error } = useInsights(period);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   if (loading) {
