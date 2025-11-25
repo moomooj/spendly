@@ -31,24 +31,26 @@ export default function Search({ data, setSearchModal }: Iprops) {
   }, [data, searchTerm]);
 
   return (
-    <div
-      onClick={() => setSearchModal(false)}
-      className="fixed inset-0 bg-Sly-bg dark:bg-Sly-D-bg bg-opacity-70 p-4 sm:p-8 z-20 backdrop-blur-sm"
-    >
+    <div className="fixed inset-0 bg-Sly-bg dark:bg-Sly-D-bg bg-opacity-70 p-4 sm:p-8 z-20 backdrop-blur-sm">
       <div
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-2xl mx-auto bg-Sly-bg dark:bg-Sly-D-bg rounded-lg  flex flex-col max-h-[90vh]"
       >
-        <div className="p-4 relative">
-          <MagnifyingGlassIcon className="ml-1 w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search transactions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-gray-300 dark:bg-Sly-D-bg rounded-sm py-2 pl-10 pr-4 focus:outline-none  text-Sly-Text dark:text-gray-200"
-            autoFocus
-          />
+        <div className="flex items-center justify-between">
+          <div className="p-4 relative w-full">
+            <MagnifyingGlassIcon className="ml-1 w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search transactions..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-gray-300 dark:bg-Sly-D-bg rounded-sm py-2 pl-10 pr-4 focus:outline-none  text-Sly-Text dark:text-gray-200"
+              autoFocus
+            />
+          </div>
+          <div className="font-semibold" onClick={() => setSearchModal(false)}>
+            Cancel
+          </div>
         </div>
         <div className="overflow-y-auto p-4">
           {filteredData.map((group) => (
@@ -58,6 +60,7 @@ export default function Search({ data, setSearchModal }: Iprops) {
               transactions={group.transactions}
             />
           ))}
+
           {searchTerm && filteredData.length === 0 && (
             <p className="text-center text-gray-500 dark:text-gray-400 py-10">
               No transactions found for "{searchTerm}".
