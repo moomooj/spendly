@@ -5,7 +5,7 @@ import { useTransactions } from "@/hooks/useTransactions";
 export default function Dashboard() {
   const { data, isLoading, isError, error } = useTransactions();
   if (isLoading) {
-    return <p>⏳ 로딩 중...</p>;
+    return <p>⏳ Loading ...</p>;
   } else if (isError) {
     return <p style={{ color: "red" }}>⚠️ 데이터 로딩 실패: {error.message}</p>;
   } else if (data)

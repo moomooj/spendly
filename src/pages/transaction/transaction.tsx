@@ -225,7 +225,7 @@ export default function TransactionForm() {
           ) : (
             <div
               onClick={() => setCategoryModal(true)}
-              className="flex items-center gap-2 px-3 text-gray-400 border-1 rounded-md p-1"
+              className="flex items-center gap-2 px-3 text-black border-1 rounded-md p-1"
               style={
                 category?.color
                   ? { background: category.color, border: "0px" }

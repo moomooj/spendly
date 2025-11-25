@@ -1,26 +1,20 @@
 export const colorList = [
-  "#EF4444", // Red
-  "#F97316", // Orange
-  "#EAB308", // Yellow
-  "#84CC16", // Lime
-  "#22C55E", // Green
-  "#10B981", // Emerald
-  "#14B8A6", // Teal
-  "#06B6D4", // Cyan
-  "#0EA5E9", // Sky
-  "#3B82F6", // Blue
-  "#6366F1", // Indigo
-  "#8B5CF6", // Violet
-  "#A855F7", // Purple
-  "#D946EF", // Fuchsia
-  "#EC4899", // Pink
-  "#F43F5E", // Rose
-  "#78716C", // Stone
-  "#A16207", // Amber
-  "#6B7280", // Gray
-  "#64748B", // Slate
-  "#737373", // Neutral
-  "#71717A", // Zinc
-  "#52525B", // Cool Gray
-  "#44403C", // Warm Gray
+  "#F87171", // Stronger Soft Red
+  "#FB923C", // Stronger Soft Orange
+  "#FACC15", // Stronger Soft Yellow
+  "#A3E635", // Stronger Soft Lime
+  "#4ADE80", // Stronger Soft Green
+  "#34D399", // Stronger Soft Emerald
+  "#2DD4BF", // Stronger Soft Teal
+  "#22D3EE", // Stronger Soft Cyan
+  "#38BDF8", // Stronger Soft Sky
+  "#60A5FA", // Stronger Soft Blue
+  "#818CF8", // Stronger Soft Indigo
+  "#A78BFA", // Stronger Soft Violet
+  "#C084FC", // Stronger Soft Purple
+  "#E879F9", // Stronger Soft Fuchsia
+  "#F472B6", // Stronger Soft Pink
+  "#FB7185", // Stronger Soft Rose
+  "#A8A29E", // Stronger Soft Stone
+  "#FBBF24", // Stronger Soft Amber
 ];
