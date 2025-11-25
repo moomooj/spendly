@@ -19,11 +19,12 @@ export default function Category({ data }: Iprops) {
       <div className="flex overflow-auto py-4">
         {data?.map((category: InsightSingle) => (
           <div
-            className="flex items-center rounded-sm py-1 px-2 mx-2 whitespace-nowrap cursor-pointer bg-Sly-D-bg"
+            className="flex items-center dark:bg-Sly-D-bg dark:text-Sly-bg text-Sly-D-bg bg-Sly-bg border-1 border-Sly-D-bg dark:border-Sly-bg rounded-sm py-1 px-2 mx-2 whitespace-nowrap cursor-pointer "
             key={category.id}
             style={{
               backgroundColor:
                 category.id === categoryNum ? category.color : "",
+              border: category.id === categoryNum ? "none" : "",
             }}
             onClick={() => handleCategoryClick(category.id)}
           >
