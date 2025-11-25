@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTotal } from "./hooks/useTotal";
+import { useTotal } from "../hooks/useTotal";
 import type { Period } from "@/types/common";
 import { periods } from "@/constants/periods";
 import useCurrencyStore from "@/store/currencyStore";

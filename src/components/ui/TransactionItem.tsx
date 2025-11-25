@@ -19,7 +19,6 @@ export default function TransactionItem({
       className="flex justify-between items-center py-3 cursor-pointer"
       onClick={() => navigate("/transaction", { state: { transaction } })}
     >
-      {/* 왼쪽: 아이콘 + 카테고리 + 시간 */}
       <div className="flex items-center gap-3">
         <p
           className="flex items-center justify-center w-10 h-10 rounded-xl text-3xl"
@@ -37,7 +36,6 @@ export default function TransactionItem({
         </div>
       </div>
 
-      {/* 오른쪽: 금액 */}
       <p
         className={`font-semibold text-sm ${
           transaction.type === "expense"

@@ -7,13 +7,27 @@ export type Period =
 
 export type InsightType = "expense" | "income" | "total";
 
-export type IType = "expense" | "income";
+export type IType = "expense" | "income" | "recurring";
+export type IRecurring = "daily" | "weekly" | "monthly" | "yearly";
+
+export type TOptions =
+  | "all"
+  | "expense"
+  | "income"
+  | "category"
+  | "recurring"
+  | "upcoming"
+  | "by-day"
+  | "by-week"
+  | "by-month"
+  | "by-year";
 
 /*get */
 export interface ITransaction {
   _id: string;
   id: number;
   type: IType;
+  recurring?: IRecurring;
   amount: number;
   note?: string;
   date: string;
