@@ -25,7 +25,7 @@ export default function Settings() {
         />
         <SettingBtn
           icon={
-            <span role="img" aria-label="appearance">
+            <span role="img" aria-label="notifications">
               🎨
             </span>
           }
@@ -33,6 +33,17 @@ export default function Settings() {
           buttonType="text"
           SettingText={"Notifications"}
           onClick={() => navigate("/settings/notifications")}
+        />
+        <SettingBtn
+          icon={
+            <span role="img" aria-label="currency">
+              🎨
+            </span>
+          }
+          label="Currency"
+          buttonType="text"
+          SettingText={"Currency"}
+          onClick={() => navigate("/settings/currency")}
         />
       </section>
     </div>

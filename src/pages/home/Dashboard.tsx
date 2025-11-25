@@ -7,7 +7,11 @@ export default function Dashboard() {
   if (isLoading) {
     return <p>⏳ Loading ...</p>;
   } else if (isError) {
-    return <p style={{ color: "red" }}>⚠️ 데이터 로딩 실패: {error.message}</p>;
+    return (
+      <p style={{ color: "red" }}>
+        ⚠️ Can not load data. error : {error.message}
+      </p>
+    );
   } else if (data)
     return (
       <div className="text-gray-800">

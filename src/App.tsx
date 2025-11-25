@@ -4,12 +4,14 @@ import Dashboard from "@/pages/home/Dashboard";
 import Insights from "@/pages/insights/Insights";
 import Settings from "@/pages/settings/Settings";
 import Transaction from "@/pages/transaction/Transaction";
-import AppearancePage from "@/pages/settings/general/Appearance/AppearanceModal";
-import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
 import EditCategory from "@/pages/category/EditCategory";
 import InsightsDetail from "@/pages/insights/InsightDetail";
 import NotFound from "@/pages/ErrorPage/NotFound";
 import ErrorPage from "@/pages/ErrorPage/ErrorPage";
+
+import AppearancePage from "@/pages/settings/general/Appearance/AppearanceModal";
+import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
+import Currency from "@/pages/settings/general/Currency/Currency";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
       { path: "settings", element: <Settings /> },
       { path: "settings/appearance", element: <AppearancePage /> },
       { path: "settings/notifications", element: <Notifications /> },
+      { path: "settings/currency", element: <Currency /> },
     ],
   },
   {
