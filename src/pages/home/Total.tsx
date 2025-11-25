@@ -22,7 +22,7 @@ export default function Total() {
     );
   } else if (data)
     return (
-      <div className="w-full h-60 flex flex-col justify-center items-center bg-white dark:bg-Sly-D-bg rounded-lg mb-6">
+      <div className="w-full h-60 flex flex-col justify-center items-center bg-Sly-bg dark:bg-Sly-D-bg rounded-lg mb-6">
         <div className="relative">
           <h1 className="text-center text-lg">
             Net Total{" "}

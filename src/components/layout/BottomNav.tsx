@@ -16,7 +16,7 @@ export default function BottomNav() {
             onClick={() => navigate(tab.path)}
             className={
               tab.center
-                ? "bg-Sly-grey-900 dark:bg-Sly-blue px-8 py-3 rounded-2xl text-white font-extrabold"
+                ? "bg-Sly-Text dark:bg-Sly-blue px-8 py-3 rounded-2xl text-white font-extrabold"
                 : isActive
                 ? "dark:text-white"
                 : "text-Sly-grey-300 dark:text-Sly-grey-700"

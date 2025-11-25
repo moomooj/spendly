@@ -225,7 +225,7 @@ export default function TransactionForm() {
           ) : (
             <div
               onClick={() => setCategoryModal(true)}
-              className="flex items-center gap-2 px-3 text-Sly-Text dark:text-gray-200 border dark:border-Sly-grey-700 rounded-md p-1 cursor-pointer"
+              className="flex items-center gap-2 px-3 text-black  border dark:border-Sly-grey-700 rounded-md p-1 cursor-pointer"
               style={
                 category?.color
                   ? { background: category.color, border: "0px" }
@@ -233,7 +233,7 @@ export default function TransactionForm() {
               }
             >
               {category?.name ? (
-                `${category.icon}    ${category.name}`
+                `${category.icon}  ${category.name}`
               ) : (
                 <>
                   <TagIcon className="w-5 h-5" />
