@@ -61,11 +61,14 @@ export default function Total() {
         </div>
 
         <div className="text-5xl mt-2">
-          {data.total < 0 && "-"}
-          {selectedCurrency.symbol}
-          {Math.abs(data.total).toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-          })}
+          <span className="text-4xl text-gray-400 dark:text-gray-400">
+            {selectedCurrency.symbol}
+          </span>
+          <span>
+            {data.total.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+            })}
+          </span>
         </div>
       </div>
     );

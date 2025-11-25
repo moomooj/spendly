@@ -1,8 +1,19 @@
+export type Period =
+  | "today"
+  | "this-week"
+  | "this-month"
+  | "this-year"
+  | "all-time";
+
+export type InsightType = "expense" | "income" | "total";
+
+export type IType = "expense" | "income";
+
 /*get */
 export interface ITransaction {
   _id: string;
   id: number;
-  type: "expense" | "income";
+  type: IType;
   amount: number;
   note?: string;
   date: string;
@@ -17,7 +28,7 @@ export interface ICategory {
   name: string;
   color: string;
   icon: string;
-  type: "expense" | "income";
+  type: IType;
 }
 
 export interface ITransactionGroup {
@@ -30,11 +41,11 @@ export interface PostICategory {
   name: string;
   icon: string;
   color: string;
-  type: "expense" | "income";
+  type: IType;
 }
 
 export interface PostTransaction {
-  type: "expense" | "income";
+  type: IType;
   amount: number;
   note?: string;
   date: string;
@@ -55,15 +66,6 @@ export interface Insight {
   // for recharts type, index signiture
   [key: string]: string | number | ITransaction[];
 }
-
-export type Period =
-  | "today"
-  | "this-week"
-  | "this-month"
-  | "this-year"
-  | "all-time";
-
-export type InsightType = "expense" | "income" | "total";
 
 export interface InsightSingle {
   id: number;
