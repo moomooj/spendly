@@ -1,10 +1,8 @@
 import SettingBtn from "@/components/settings/SettingBtn";
 
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "./general/Appearance/useDarkMode";
 
 export default function Settings() {
-  const { theme } = useTheme();
   const navigate = useNavigate();
   return (
     <div className="space-y-6">
@@ -20,7 +18,7 @@ export default function Settings() {
           }
           label="Appearance"
           buttonType="text"
-          SettingText={theme}
+          SettingText={"Appearance"}
           onClick={() => navigate("/settings/appearance")}
         />
         <SettingBtn

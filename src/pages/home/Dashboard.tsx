@@ -5,16 +5,17 @@ import { useTransactions } from "@/hooks/useTransactions";
 export default function Dashboard() {
   const { data, isLoading, isError, error } = useTransactions();
   if (isLoading) {
-    return <p>⏳ Loading ...</p>;
+    return <p className="text-Sly-Text dark:text-gray-200">⏳ Loading ...</p>;
   } else if (isError) {
     return (
-      <p style={{ color: "red" }}>
+      <p className="text-red-500">
         ⚠️ Can not load data. error : {error.message}
       </p>
     );
   } else if (data)
     return (
-      <div className="text-gray-800">
+      // Set base text colors for light and dark modes
+      <div className="text-Sly-Text dark:text-gray-200">
         <Total />
         {data.map((group) => (
           <TransactionGroup

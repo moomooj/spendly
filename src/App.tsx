@@ -12,6 +12,7 @@ import ErrorPage from "@/pages/ErrorPage/ErrorPage";
 import AppearancePage from "@/pages/settings/general/Appearance/AppearanceModal";
 import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
 import Currency from "@/pages/settings/general/Currency/Currency";
+import { ThemeProvider } from "./pages/settings/general/Appearance/ThemeProvider";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }
 
 export default App;

@@ -10,7 +10,7 @@ export default function TransactionGroup({
 
   return (
     <div className="mb-3">
-      <p className="text-gray-400 text-xs font-semibold uppercase tracking-wide pb-2 border-b border-gray-300">
+      <p className="text-Sly-grey-500 dark:text-Sly-grey-700 text-xs font-semibold uppercase tracking-wide pb-2 border-b border-gray-300 dark:border-Sly-grey-700">
         {formatDate(date)}
       </p>
       <div className="space-y-1">

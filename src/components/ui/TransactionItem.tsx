@@ -28,10 +28,10 @@ export default function TransactionItem({
           {transaction.category?.icon}
         </p>
         <div>
-          <p className="font-medium text-gray-800">
+          <p className="font-medium text-Sly-Text dark:text-gray-200">
             {transaction.category?.name}
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-Sly-grey-500 dark:text-Sly-grey-700">
             {formatDate(transaction.date)}
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function TransactionItem({
         className={`font-semibold text-sm ${
           transaction.type === "expense"
             ? "text-shadow-Sly-D-bg"
-            : "text-green-400"
+            : "text-green-300"
         }`}
       >
         {transaction.type === "expense" ? "-" : "+"}$

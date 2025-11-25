@@ -1,12 +1,12 @@
 import SettingModalLayout from "@/components/settings/SettingModalLayout";
-import { useTheme } from "./useDarkMode";
+import { useThemeStore } from "@/store/themeStore";
 
 export default function AppearanceModal() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useThemeStore();
 
   return (
     <SettingModalLayout title="Appearance">
-      <div className="rounded">
+      <div className="rounded overflow-hidden">
         <button
           onClick={() => setTheme("system")}
           className={`w-full px-4 py-2  ${
