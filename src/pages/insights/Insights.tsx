@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 import { useInsights } from "./useInsights";
 import { periods } from "@/constants/periods";
 import type { InsightType, Period } from "@/types/common";
@@ -115,7 +115,6 @@ export default function Insights() {
                 <Cell key={`cell-${entry.id}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip />
           </PieChart>
           <div className="absolute flex flex-col justify-center items-center">
             <span className="text-gray-500 text-sm">

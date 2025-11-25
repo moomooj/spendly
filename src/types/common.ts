@@ -74,5 +74,6 @@ export interface InsightSingle {
   percentage: number;
   transactionsCount: number;
   averageTransaction: number;
-  transactions: ITransactionGroup[];
+  transactions: ITransaction[];
+  chart: ITransaction[];
 }

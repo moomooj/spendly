@@ -8,10 +8,9 @@ import {
   Bar,
   BarChart,
   Cell,
+  LabelList,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
-  YAxis,
 } from "recharts";
 
 export default function InsightsDetail() {
@@ -20,7 +19,10 @@ export default function InsightsDetail() {
   const { data: category, loading, error } = useInsightById(id, period);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const transactions = category?.transactions || [];
+  const chart = category?.chart || [];
   const navigate = useNavigate();
+
+  console.log(category);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -38,7 +40,7 @@ export default function InsightsDetail() {
           <header className="flex items-center justify-between mb-6">
             <XMarkIcon onClick={() => navigate(-1)} className="w-6 h-6" />
             <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-              <span>{category.name} Deatils</span> <span>{category.icon}</span>
+              <span>{category.name} Deatils</span>
             </h1>
             <div className="relative">
               <button
@@ -72,35 +74,51 @@ export default function InsightsDetail() {
 
           {/*Bar Chart Section */}
           <section className="bg-white rounded-lg shadow p-4 mb-3">
-            {transactions.length > 0 ? (
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart
-                  data={transactions}
-                  margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+            {chart.length > 0 ? (
+              <div style={{ width: "100%", overflowX: "auto" }}>
+                <ResponsiveContainer
+                  width={Math.max(chart.length * 60, 300)}
+                  height={300}
                 >
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fontSize: 12 }}
-                    interval={0}
-                    angle={-30}
-                    textAnchor="end"
-                    height={70}
-                  />
-                  <YAxis tickFormatter={(value) => `$${value}`} />
-                  <Tooltip
-                    cursor={{ fill: "rgba(0,0,0,0.05)" }}
-                    formatter={(value: number) => [
-                      `$${value.toFixed(2)}`,
-                      "Amount",
-                    ]}
-                  />
-                  <Bar dataKey="amount" radius={[4, 4, 0, 0]}>
-                    {transactions.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={category.color} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+                  <BarChart
+                    data={chart}
+                    margin={{ top: 20, right: 10, left: 10, bottom: 10 }}
+                  >
+                    <Bar dataKey="amount" radius={[4, 4, 0, 0]}>
+                      <LabelList
+                        dataKey="amount"
+                        position="top"
+                        formatter={(value: any) => {
+                          if (typeof value === "number") {
+                            return `$${value.toLocaleString()}`;
+                          }
+                          return value;
+                        }}
+                        fontSize={12}
+                      />
+                      {chart.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={category.color} />
+                      ))}
+                    </Bar>
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fontSize: 12, dy: 5 }}
+                      interval={0}
+                      tickFormatter={(date) => {
+                        return new Date(date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        });
+                      }}
+                      height={40}
+                      axisLine={false}
+                      tickLine={false}
+                      angle={-30}
+                      textAnchor="end"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             ) : (
               <p className="text-center text-gray-500 py-10">
                 No chart data available.

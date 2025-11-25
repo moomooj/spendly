@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_BASE } from "@/constants/api";
-import type { Insight, Period } from "@/types/common";
+import type { Insight, InsightSingle, Period } from "@/types/common";
 import axios from "axios";
 
 interface InsightResponse {
@@ -35,10 +35,13 @@ export const useInsights = (period: Period = "this-month") => {
 const fetchInsightById = async (
   id: string,
   period: Period
-): Promise<Insight> => {
-  const { data } = await axios.get<Insight>(`${API_BASE}/insights/${id}`, {
-    params: { period },
-  });
+): Promise<InsightSingle> => {
+  const { data } = await axios.get<InsightSingle>(
+    `${API_BASE}/insights/${id}`,
+    {
+      params: { period },
+    }
+  );
   return data;
 };
 
@@ -51,7 +54,7 @@ export const useInsightById = (
     isLoading: loading,
     isError,
     error,
-  } = useQuery<Insight, Error>({
+  } = useQuery<InsightSingle, Error>({
     queryKey: ["insight", id, period],
     queryFn: () => fetchInsightById(id!, period),
 
