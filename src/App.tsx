@@ -1,12 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./components/layout/AppLayout";
 import Dashboard from "@/pages/home/Dashboard";
-import Insights from "./pages/insights/Insights";
+import Insights from "@/pages/insights/Insights";
 import Settings from "@/pages/settings/Settings";
 import Transaction from "@/pages/transaction/Transaction";
 import AppearancePage from "@/pages/settings/general/Appearance/AppearanceModal";
 import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
-import EditCategory from "@/pages/category/editCategory";
+import EditCategory from "@/pages/category/EditCategory";
+import InsightsDetail from "@/pages/insights/insightDetail";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       { path: "insights", element: <Insights /> },
+      { path: "insights/:id", element: <InsightsDetail /> },
       { path: "settings", element: <Settings /> },
       { path: "settings/appearance", element: <AppearancePage /> },
       { path: "settings/notifications", element: <Notifications /> },

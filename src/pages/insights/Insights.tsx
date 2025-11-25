@@ -1,21 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import { useInsights } from "./useInsights";
 import { periods } from "@/constants/periods";
-import type { Insight, Period } from "@/types/common";
-import InsightsDetail from "./insightDetail";
-
-export type InsightType = "expense" | "income" | "total";
+import type { InsightType, Period } from "@/types/common";
 
 export default function Insights() {
-  const [selectedCategory, setSelectedCategory] = useState<Insight | null>(
-    null
-  );
+  const navigate = useNavigate();
   const [insightType, setInsightType] = useState<InsightType>("total");
   const [period, setPeriod] = useState<Period>("this-month");
   const { data: categoryData, loading, error } = useInsights(period);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
+
+  const currentData = categoryData?.[insightType];
 
   if (loading) {
     return <div>Loading...</div>;
@@ -23,12 +20,6 @@ export default function Insights() {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
-  const handleCloseDetail = () => {
-    setIsDetailOpen(false);
-  };
-
-  const currentData = categoryData?.[insightType];
 
   const totalAmount =
     currentData?.reduce((sum, category) => sum + category.amount, 0) || 0;
@@ -148,11 +139,8 @@ export default function Insights() {
           {currentData?.map((category) => (
             <div
               key={category.id}
-              onClick={() => {
-                setSelectedCategory(category);
-                setIsDetailOpen(true);
-              }}
               className=" flex items-center justify-between p-2"
+              onClick={() => navigate(`/insights/${category.id}`)}
             >
               <div className="flex items-center gap-4">
                 <div
@@ -177,15 +165,6 @@ export default function Insights() {
               </div>
             </div>
           ))}
-
-          {isDetailOpen && selectedCategory && (
-            <InsightsDetail
-              category={selectedCategory}
-              onClose={handleCloseDetail}
-              period={period}
-              setPeriod={setPeriod}
-            />
-          )}
         </div>
       </div>
     </div>

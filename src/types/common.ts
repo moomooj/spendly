@@ -62,3 +62,17 @@ export type Period =
   | "this-month"
   | "this-year"
   | "all-time";
+
+export type InsightType = "expense" | "income" | "total";
+
+export interface InsightSingle {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+  amount: number;
+  percentage: number;
+  transactionsCount: number;
+  averageTransaction: number;
+  transactions: ITransactionGroup[];
+}

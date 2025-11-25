@@ -30,3 +30,33 @@ export const useInsights = (period: Period = "this-month") => {
 
   return { data: data, loading, error: isError ? error.message : null };
 };
+
+//GET:ID
+const fetchInsightById = async (
+  id: string,
+  period: Period
+): Promise<Insight> => {
+  const { data } = await axios.get<Insight>(`${API_BASE}/insights/${id}`, {
+    params: { period },
+  });
+  return data;
+};
+
+export const useInsightById = (
+  id: string | undefined,
+  period: Period = "this-month"
+) => {
+  const {
+    data,
+    isLoading: loading,
+    isError,
+    error,
+  } = useQuery<Insight, Error>({
+    queryKey: ["insight", id, period],
+    queryFn: () => fetchInsightById(id!, period),
+
+    enabled: !!id,
+  });
+
+  return { data, loading, error: isError ? error.message : null };
+};
