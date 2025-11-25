@@ -20,12 +20,12 @@ export default function EditCategory() {
     return <div>can't load categories : {error.message}</div>;
   } else if (data)
     return (
-      <div className="flex flex-col items-center bg-Sly-bg min-h-screen py-5 px-3 relative">
+      <div className="flex flex-col items-center bg-Sly-bg dark:bg-Sly-D-bg min-h-screen py-5 px-3 relative">
         {/* header */}
         <div className="flex justify-between items-center w-full mb-6">
           <button
             onClick={() => navigate(-1)}
-            className="text-gray-400 hover:text-gray-600 transition"
+            className="text-gray-400 dark:text-Sly-grey-200 hover:text-gray-600  transition"
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
@@ -35,8 +35,8 @@ export default function EditCategory() {
               onClick={() => setType("expense")}
               className={`px-4 py-1 rounded-full text-sm font-medium ${
                 type === "expense"
-                  ? "bg-white shadow text-gray-900"
-                  : "text-gray-400"
+                  ? "bg-white dark:bg-Sly-grey-700 shadow text-gray-900 dark:text-white"
+                  : "text-gray-400 dark:text-Sly-grey-200"
               }`}
             >
               Expense
@@ -45,15 +45,15 @@ export default function EditCategory() {
               onClick={() => setType("income")}
               className={`px-4 py-1 rounded-full text-sm font-medium ${
                 type === "income"
-                  ? "bg-white shadow text-gray-900"
-                  : "text-gray-400"
+                  ? "bg-white dark:bg-Sly-grey-700 shadow text-gray-900 dark:text-white"
+                  : "text-gray-400 dark:text-Sly-grey-200"
               }`}
             >
               Income
             </button>
           </div>
 
-          <div className="flex rounded-full px-2 py-1 bg-white shadow text-sm font-medium">
+          <div className="flex rounded-full px-2 py-1 bg-white dark:bg-Sly-grey-900 shadow text-sm font-medium text-Sly-Text dark:text-gray-200">
             <button
               onClick={() => {
                 setSelectedCategory(undefined);
@@ -66,7 +66,7 @@ export default function EditCategory() {
         </div>
 
         {/* category */}
-        <section className="bg-white w-full dark:bg-Sly-grey-900 text-Sly-Text dark:text-white rounded-lg p-3 space-y-4 ">
+        <section className="bg-white w-full dark:bg-Sly-grey-900 text-Sly-Text dark:text-gray-200 rounded-lg p-3 space-y-4 ">
           {data.map(
             (category) =>
               category.type === type && (
@@ -76,12 +76,12 @@ export default function EditCategory() {
                     setSelectedCategory(category);
                     setNewCategoryModal(true);
                   }}
-                  className="flex items-center "
+                  className="flex items-center cursor-pointer"
                 >
                   <div className="text-2xl mr-3">{category.icon}</div>
                   <div className="flex w-full items-center justify-between ">
-                    <div className="flex w-full justify-between items-center gap-1 text-gray-500">
-                      <span className="text-sm text-Sly-Text font-semibold">
+                    <div className="flex w-full justify-between items-center gap-1">
+                      <span className="text-sm text-Sly-Text dark:text-gray-200 font-semibold">
                         {category.name}
                       </span>
                       <div

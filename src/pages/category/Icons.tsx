@@ -12,7 +12,7 @@ export default function Icons({ setIcon }: IconsProps) {
   return (
     <div className="flex justify-center items-center ">
       <div
-        className="bg-Sly-bg  p-5 max-w-sm w-full pb-10"
+        className="bg-Sly-bg dark:bg-Sly-grey-900 p-5 max-w-sm w-full pb-10"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="overflow-x-auto pb-2">
@@ -21,7 +21,7 @@ export default function Icons({ setIcon }: IconsProps) {
               <button
                 key={index}
                 onClick={() => handleIconClick(icon)}
-                className="text-3xl rounded-lg hover:bg-gray-200 p-2 transition-colors"
+                className="text-3xl rounded-lg hover:bg-gray-200 dark:hover:bg-Sly-grey-700 p-2 transition-colors"
               >
                 {icon}
               </button>

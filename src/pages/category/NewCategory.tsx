@@ -121,12 +121,12 @@ export default function NewCategory({
       onClick={() => setNewCategoryModal(false)}
     >
       <div
-        className="w-full  bg-white flex flex-col items-center pt-5 px-3 rounded-t-2xl"
+        className="w-full bg-white dark:bg-Sly-D-bg flex flex-col items-center pt-5 px-3 rounded-t-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* header */}
         <div className="flex justify-between items-center w-full mb-6">
-          <button className="text-gray-400 hover:text-gray-600 transition">
+          <button className="text-gray-400 dark:text-Sly-grey-200 hover:text-gray-600 dark:hover:text-Sly-grey-300 transition">
             <XMarkIcon
               className="w-6 h-6"
               onClick={() => setNewCategoryModal(false)}
@@ -138,8 +138,8 @@ export default function NewCategory({
               onClick={() => setType("expense")}
               className={`px-4 py-1 rounded-full text-sm font-medium ${
                 type === "expense"
-                  ? "bg-white shadow text-gray-900"
-                  : "text-gray-400"
+                  ? "bg-white dark:bg-Sly-grey-700 shadow text-gray-900 dark:text-white"
+                  : "text-gray-400 dark:text-Sly-grey-200"
               }`}
             >
               Expense
@@ -148,8 +148,8 @@ export default function NewCategory({
               onClick={() => setType("income")}
               className={`px-4 py-1 rounded-full text-sm font-medium ${
                 type === "income"
-                  ? "bg-white shadow text-gray-900"
-                  : "text-gray-400"
+                  ? "bg-white dark:bg-Sly-grey-700 shadow text-gray-900 dark:text-white"
+                  : "text-gray-400 dark:text-Sly-grey-200"
               }`}
             >
               Income
@@ -166,13 +166,17 @@ export default function NewCategory({
         </div>
 
         {/* icon */}
-        <div className="px-5 py-4 text-3xl rounded-xl border-3 border-Sly-grey-300 my-20">
-          {icon ? icon : <FaceSmileIcon className="w-7 h-9" />}
+        <div className="px-5 py-4 text-3xl rounded-xl border-3 border-Sly-grey-300 dark:border-Sly-grey-700 my-20">
+          {icon ? (
+            icon
+          ) : (
+            <FaceSmileIcon className="w-7 h-9 text-Sly-grey-500 dark:text-Sly-grey-300" />
+          )}
         </div>
 
         {/* color, name ,add btn */}
         <div className="flex py-3 w-full">
-          <div className="w-10 h-10 bg-Sly-bg rounded-xl flex justify-center items-center">
+          <div className="w-10 h-10 bg-Sly-bg dark:bg-Sly-grey-900 rounded-xl flex justify-center items-center">
             <div
               onClick={() => setShowColorModal(!showColorModal)}
               className="w-7 h-7 rounded-xl relative"
@@ -187,7 +191,7 @@ export default function NewCategory({
             </div>
           </div>
           <input
-            className="bg-Sly-bg mx-2 px-2 w-9/12 rounded-xl border-2 border-transparent focus:outline-none focus:border-Sly-Text transition-colors"
+            className="bg-Sly-bg dark:bg-Sly-grey-900 text-Sly-Text dark:text-gray-200 mx-2 px-2 w-9/12 rounded-xl border-2 border-transparent focus:outline-none focus:border-Sly-Text transition-colors"
             placeholder="Category name"
             type="text"
             value={name}
