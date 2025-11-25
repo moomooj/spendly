@@ -15,10 +15,10 @@ export default function Insights() {
   const currentData = categoryData?.[insightType];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-Sly-Text dark:text-gray-200">Loading...</div>;
   }
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="text-red-500">Error: {error}</div>;
   }
 
   const totalAmount =
@@ -29,18 +29,18 @@ export default function Insights() {
   const dynamicPaddingAngle = chartDisplayData.length > 1 ? 4 : 0;
 
   return (
-    <div>
-      <div className="max-w-4xl mx-auto ">
+    <div className="text-Sly-Text dark:text-gray-200">
+      <div className="max-w-4xl mx-auto">
         {/* Controls: Toggle and Dropdown */}
         <div className="flex justify-between items-center my-4">
           {/* Expense/Income Toggle */}
-          <div className="flex bg-gray-200 rounded-full p-1 text-sm">
+          <div className="flex bg-gray-200 dark:bg-Sly-grey-900 rounded-full p-1 text-sm">
             <button
               onClick={() => setInsightType("total")}
               className={`px-4 py-1 font-semibold rounded-full transition-colors duration-300 ${
                 insightType === "total"
-                  ? "bg-white text-gray-800 shadow"
-                  : "bg-transparent text-gray-500"
+                  ? "bg-white dark:bg-Sly-grey-700 text-Sly-Text dark:text-gray-200 shadow"
+                  : "bg-transparent text-Sly-grey-500"
               }`}
             >
               Total
@@ -49,8 +49,8 @@ export default function Insights() {
               onClick={() => setInsightType("expense")}
               className={`px-4 py-1 font-semibold rounded-full transition-colors duration-300 ${
                 insightType === "expense"
-                  ? "bg-white text-gray-800 shadow"
-                  : "bg-transparent text-gray-500"
+                  ? "bg-white dark:bg-Sly-grey-700 text-Sly-Text dark:text-gray-200 shadow"
+                  : "bg-transparent text-Sly-grey-500"
               }`}
             >
               Expense
@@ -59,24 +59,24 @@ export default function Insights() {
               onClick={() => setInsightType("income")}
               className={`px-4 py-1 font-semibold rounded-full transition-colors duration-300 ${
                 insightType === "income"
-                  ? "bg-white text-gray-800 shadow"
-                  : "bg-transparent text-gray-500"
+                  ? "bg-white dark:bg-Sly-grey-700 text-Sly-Text dark:text-gray-200 shadow"
+                  : "bg-transparent text-Sly-grey-500"
               }`}
             >
               Income
             </button>
           </div>
 
-          {/* Time Range Dropdown Skeleton */}
+          {/* Time Range Dropdown */}
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="rounded-lg p-0.5 text-sm px-2 border-gray-300 border capitalize"
+              className="rounded-lg p-0.5 text-sm px-2 border-gray-300 dark:border-Sly-grey-700 border capitalize"
             >
               {period.replace("-", " ")}
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 top-full mt-2 w-36 bg-white border border-gray-300  shadow-lg z-10">
+              <div className="absolute right-0 top-full mt-2 w-36 bg-white dark:bg-Sly-grey-900 border border-gray-300 dark:border-Sly-grey-700 shadow-lg z-10 rounded-md">
                 <ul>
                   {periods.map((p) => (
                     <li key={p}>
@@ -85,8 +85,11 @@ export default function Insights() {
                           setPeriod(p);
                           setIsDropdownOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-sm bg-Sly-bg text-gray-70 capitalize"
-                        style={period === p ? {} : { background: "white" }}
+                        className={`w-full text-left px-4 py-2 text-sm capitalize ${
+                          period === p
+                            ? "bg-Sly-bg dark:bg-Sly-grey-700"
+                            : "bg-white dark:bg-Sly-grey-900 hover:bg-Sly-bg dark:hover:bg-Sly-grey-700"
+                        }`}
                       >
                         {p.replace("-", " ")}
                       </button>
@@ -110,6 +113,7 @@ export default function Insights() {
               fill="#8884d8"
               paddingAngle={dynamicPaddingAngle}
               dataKey="percentage"
+              stroke="none"
             >
               {chartDisplayData.map((entry) => (
                 <Cell key={`cell-${entry.id}`} fill={entry.color} />
@@ -117,14 +121,14 @@ export default function Insights() {
             </Pie>
           </PieChart>
           <div className="absolute flex flex-col justify-center items-center">
-            <span className="text-gray-500 text-sm">
+            <span className="text-Sly-grey-500 dark:text-Sly-grey-300 text-sm">
               {insightType === "expense"
                 ? "Total Spent"
                 : insightType === "income"
                 ? "Total Income"
                 : "Total"}
             </span>
-            <span className="text-3xl font-bold text-gray-800">
+            <span className="text-3xl font-bold text-Sly-Text dark:text-gray-200">
               {totalAmount < 0 ? "-$" : "$"}
               {Math.abs(totalAmount).toLocaleString(undefined, {
                 maximumFractionDigits: 0,
@@ -138,7 +142,7 @@ export default function Insights() {
           {currentData?.map((category) => (
             <div
               key={category.id}
-              className=" flex items-center justify-between p-2"
+              className="flex items-center justify-between p-2 rounded-md hover:bg-Sly-bg dark:hover:bg-Sly-grey-900 cursor-pointer"
               onClick={() => navigate(`/insights/${category.id}`)}
             >
               <div className="flex items-center gap-4">
@@ -146,16 +150,14 @@ export default function Insights() {
                   className="w-3 h-3 rounded-full"
                   style={{ background: category.color }}
                 />
-                <span className="font-medium text-gray-700">
-                  {category.name}
-                </span>
+                <span className="font-medium">{category.name}</span>
               </div>
-              <div className="flex ">
-                <div className="font-bold mr-7">
+              <div className="flex">
+                <div className="font-semibold dark:font-light mr-7">
                   {category.amount < 0 ? "-$" : "$"}
-                  {Math.round(Math.abs(category.amount)).toLocaleString()}
+                  {Math.abs(category.amount).toLocaleString()}
                 </div>
-                <div className="font-semibold">
+                <div className="font-semibold dark:font-light ">
                   {category.percentage < 10 && (
                     <span style={{ visibility: "hidden" }}>0</span>
                   )}
