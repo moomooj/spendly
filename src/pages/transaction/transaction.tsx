@@ -19,7 +19,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Category from "./Category";
 
 import Datepicker from "./Datepicker";
-import type { ICategory, PostTransaction } from "@/types/common";
+import type { ICategory, IRecurring, PostTransaction } from "@/types/common";
+import RecurringModal from "./RecurringModal";
 
 export default function TransactionForm() {
   const location = useLocation();
@@ -46,13 +47,20 @@ export default function TransactionForm() {
     transactionToEdit ? new Date(transactionToEdit.date) : new Date()
   );
 
+  const [recurring, setRecurring] = useState<IRecurring | null>(
+    transactionToEdit?.recurring || null
+  );
+  const [customNumber, setCustomNumber] = useState<number | null>(
+    transactionToEdit?.customNumber || null
+  );
+  const [recurringMenu, setRecurringMenu] = useState(false);
+
   const createTransactionMutation = useCreateTransaction();
   const updateTransactionMutation = useUpdateTransaction();
   const deleteTransactionMutation = useDeleteTransaction();
 
   const handleNumberClick = (num: string) => {
     const newAmount = amountInCents * 10 + parseInt(num, 10);
-    // 99,999,999.99 is 9999999999 cents
     if (newAmount > 9999999999) {
       return;
     }
@@ -86,13 +94,19 @@ export default function TransactionForm() {
       type: type,
       amount: transactionAmount,
       note: note,
-      date: format(date, "yyyy-MM-dd'T'HH:mm:ss"), // ISO 8601 형식으로 시간 포함
+      date: format(date, "yyyy-MM-dd'T'HH:mm:ss"),
       category: category.id,
     };
+    if (recurring) {
+      transactionData.recurring = recurring;
+    }
+    if (customNumber) {
+      transactionData.customNumber = customNumber;
+    }
 
     try {
       if (transactionToEdit) {
-        // 수정 모드 (PUT)
+        // (PUT)
         updateTransactionMutation.mutate(
           { id: transactionToEdit.id, data: transactionData },
           {
@@ -101,7 +115,7 @@ export default function TransactionForm() {
           }
         );
       } else {
-        // 생성 모드 (POST)
+        // (POST)
         createTransactionMutation.mutate(transactionData, {
           onSuccess: () => navigate(-1),
           onError: (error) => alert(`Creation failed: ${error.message}`),
@@ -110,7 +124,7 @@ export default function TransactionForm() {
     } catch (error) {
       alert(
         `An unexpected error occurred: ${
-          error instanceof Error ? error.message : "알 수 없는 오류"
+          error instanceof Error ? error.message : "unexpected error"
         }`
       );
     }
@@ -169,18 +183,23 @@ export default function TransactionForm() {
             Income
           </button>
         </div>
-
-        {transactionToEdit && (
-          <button
-            onClick={handleDelete}
-            className="text-red-500 bg-red-100 dark:bg-red-900/20 rounded-full p-1.5 hover:bg-red-200 dark:hover:bg-red-900/40 transition"
-          >
-            <TrashIcon className="w-5 h-5" />
-          </button>
-        )}
-        <button className="text-Sly-grey-500 hover:text-gray-600 transition opacity-0">
-          <ArrowPathIcon className="w-5 h-5" />
-        </button>
+        <div>
+          {transactionToEdit && (
+            <button
+              onClick={handleDelete}
+              className="text-red-500 bg-red-100 dark:bg-red-900/50 rounded-full p-1.5 "
+            >
+              <TrashIcon className="w-5 h-5" />
+            </button>
+          )}
+          <RecurringModal
+            recurring={recurring}
+            setRecurring={setRecurring}
+            recurringMenu={recurringMenu}
+            setRecurringMenu={setRecurringMenu}
+            setCustomNumber={setCustomNumber}
+          />
+        </div>
       </div>
 
       <div className=" flex flex-col justify-center items-center w-full h-dvw">

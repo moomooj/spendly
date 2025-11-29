@@ -8,7 +8,7 @@ export type Period =
 export type InsightType = "expense" | "income" | "total";
 
 export type IType = "expense" | "income" | "recurring";
-export type IRecurring = "daily" | "weekly" | "monthly" | "yearly";
+export type IRecurring = "days" | "weeks" | "months" | "custom";
 
 export type TOptions =
   | "all"
@@ -27,13 +27,15 @@ export interface ITransaction {
   _id: string;
   id: number;
   type: IType;
-  recurring?: IRecurring;
   amount: number;
   note?: string;
   date: string;
   createdAt: string;
   updatedAt: string;
   category: ICategory;
+  recurring?: IRecurring;
+  endDate?: Date;
+  customNumber?: number;
 }
 
 export interface ICategory {
@@ -64,6 +66,8 @@ export interface PostTransaction {
   note?: string;
   date: string;
   category: number;
+  recurring?: IRecurring;
+  customNumber?: number;
 }
 
 export interface Insight {

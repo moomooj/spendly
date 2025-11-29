@@ -148,8 +148,8 @@ export default function InsightsDetail() {
               <div className="px-2">
                 <div className="text-sm text-Sly-grey-500">Average</div>
                 <div className="text-sm font-bold">
-                  $
-                  {category.averageTransaction.toLocaleString(undefined, {
+                  {category.amount < 0 ? "-$" : "$"}
+                  {Math.abs(category.amount).toLocaleString(undefined, {
                     maximumFractionDigits: 0,
                   })}
                 </div>
