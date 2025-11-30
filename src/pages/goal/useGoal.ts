@@ -20,6 +20,24 @@ export function useGoals() {
   });
 }
 
+/* GET by ID */
+export async function getGoalById(id: string): Promise<IGoal> {
+  try {
+    const response = await axios.get(`${API_BASE}/goal/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch goal with id ${id}. ${error}`);
+  }
+}
+
+export function useGoal(id: string | undefined) {
+  return useQuery({
+    queryKey: ["goals", id],
+    queryFn: () => getGoalById(id!),
+    enabled: !!id, // id가 있을 때만 쿼리 실행
+  });
+}
+
 /* POST */
 export async function createGoal(goalData: IGoalPost): Promise<IGoal> {
   try {
@@ -65,22 +83,21 @@ export function useUpdateTransaction() {
   });
 }*/
 
-/* DELETE 
-export async function deleteTransaction(id: string): Promise<void> {
+/* DELETE */
+export async function deleteGoal(id: string): Promise<void> {
   try {
-    await axios.delete(`${API_BASE}/transactions/${id}`);
+    await axios.delete(`${API_BASE}/goal/${id}`);
   } catch (error) {
-    throw new Error(`Failed to delete transaction. ${error}`);
+    throw new Error(`Failed to delete goal. ${error}`);
   }
 }
 
-export function useDeleteTransaction() {
+export function useDeleteGoal() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: deleteTransaction,
+    mutationFn: deleteGoal,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      queryClient.invalidateQueries({ queryKey: ["total"] });
+      queryClient.invalidateQueries({ queryKey: ["goals"] });
     },
   });
-}*/
+}

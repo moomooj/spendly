@@ -38,7 +38,7 @@ export default function CategoryPicker({
 
   return (
     <div className="fixed inset-0 bg-gray-500/40 dark:bg-black/50 backdrop-blur-sm flex items-end z-40">
-      <div className="bg-Sly-bg dark:bg-Sly-grey-800 w-full rounded-t-xl animate-slide-up-fast h-4/5 flex flex-col">
+      <div className="bg-Sly-bg dark:bg-Sly-grey-900 w-full rounded-t-xl animate-slide-up-fast h-4/5 flex flex-col">
         <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-Sly-grey-700">
           <h2 className="text-lg font-semibold text-Sly-Text dark:text-gray-200">
             Select Categories

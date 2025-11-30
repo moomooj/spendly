@@ -138,6 +138,7 @@ export interface IGoal {
   endDate: Date;
   note?: string;
   goalAmount: number;
+  currentAmount: number;
   categories: ICategoryInsight[];
   createdAt: Date;
   updatedAt: Date;

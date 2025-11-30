@@ -92,9 +92,9 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-Sly-bg dark:bg-Sly-grey-900 z-30 animate-slide-up">
+    <div className="fixed inset-0 bg-Sly-bg dark:bg-Sly-D-bg z-30 animate-slide-up">
       {/* Header */}
-      <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-Sly-grey-800">
+      <div className="flex justify-between items-center p-4 border-b border-gray-200  dark:border-Sly-grey-900">
         <button onClick={onClose}>
           <XMarkIcon className="w-7 h-7 text-gray-500 dark:text-gray-400" />
         </button>
@@ -111,9 +111,9 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
       </div>
 
       {/* Form */}
-      <div className="p-4 space-y-6">
+      <div className="p-4 space-y-6 ">
         {/* Type Toggle */}
-        <div className="bg-gray-100 dark:bg-Sly-grey-800 rounded-full p-1 flex text-Sly-Text dark:text-gray-300">
+        <div className="bg-gray-100 dark:bg-Sly-grey-900 rounded-full p-1 flex text-Sly-Text dark:text-gray-300">
           <button
             onClick={() => setGoalType("total")}
             className={`w-1/2 py-2 rounded-full text-sm font-semibold flex items-center justify-center space-x-2 transition-colors duration-300 ${
@@ -151,7 +151,7 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
 
         {/* Goal Name */}
         <div className="flex items-center space-x-4">
-          <div className="p-3 bg-gray-100 dark:bg-Sly-grey-800 rounded-full">
+          <div className="p-3 bg-gray-100 dark:bg-Sly-grey-700 rounded-full">
             <TagIcon className="w-6 h-6 text-Sly-Text dark:text-gray-300" />
           </div>
           <input
@@ -165,7 +165,7 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
 
         {/* Goal Amount */}
         <div className="flex items-center space-x-4">
-          <div className="p-3 bg-gray-100 dark:bg-Sly-grey-800 rounded-full">
+          <div className="p-3 bg-gray-100 dark:bg-Sly-grey-700 rounded-full">
             <span className="text-xl font-semibold text-Sly-Text dark:text-gray-300">
               $
             </span>
@@ -182,10 +182,10 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
         {/* Category */}
         <button
           onClick={() => setIsCategoryPickerOpen(true)}
-          className="w-full flex justify-between items-center p-4 bg-white dark:bg-Sly-grey-800 rounded-lg shadow-sm"
+          className="w-full flex justify-between items-center p-4 bg-white dark:bg-Sly-grey-900 rounded-lg shadow-sm"
         >
           <div className="flex items-center space-x-3">
-            <Squares2X2Icon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+            <Squares2X2Icon className="w-5 h-5 text-gray-500 dark:text-gray-400 " />
             <span className="text-Sly-Text dark:text-gray-300">
               Track Categories
             </span>
@@ -201,7 +201,7 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
         </button>
 
         {/* Date Range */}
-        <div className="bg-white dark:bg-Sly-grey-800 rounded-lg shadow-sm">
+        <div className="bg-white dark:bg-Sly-grey-900 rounded-lg shadow-sm">
           <button
             onClick={() => setIsStartDatePickerOpen(true)}
             className="w-full flex justify-between items-center p-4 border-b border-gray-200 dark:border-Sly-grey-700"
@@ -242,7 +242,7 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
           onChange={(e) => setNote(e.target.value)}
           placeholder="Note (optional)"
           rows={3}
-          className="w-full bg-white dark:bg-Sly-grey-800 rounded-lg shadow-sm p-4 text-Sly-Text dark:text-gray-200 placeholder-gray-400 focus:outline-none"
+          className="w-full bg-white dark:bg-Sly-grey-900 rounded-lg shadow-sm p-4 text-Sly-Text dark:text-gray-200 placeholder-gray-400 focus:outline-none"
         ></textarea>
       </div>
 

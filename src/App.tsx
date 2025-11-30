@@ -14,6 +14,7 @@ import AppearancePage from "@/pages/settings/general/Appearance/AppearanceModal"
 import Notifications from "@/pages/settings/general/Notifications/NotificationsModal";
 import Currency from "@/pages/settings/general/Currency/Currency";
 import { ThemeProvider } from "./pages/settings/general/Appearance/ThemeProvider";
+import GoalDetail from "./pages/goal/GoalDetail";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: "insights", element: <Insights /> },
       { path: "insights/:id", element: <InsightsDetail /> },
       { path: "goal", element: <Goal /> },
+      { path: "goal/:id", element: <GoalDetail /> },
       { path: "settings", element: <Settings /> },
       { path: "settings/appearance", element: <AppearancePage /> },
       { path: "settings/notifications", element: <Notifications /> },
