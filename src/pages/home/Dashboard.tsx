@@ -26,7 +26,6 @@ export default function Dashboard() {
     );
   } else if (data)
     return (
-      // Set base text colors for light and dark modes
       <div className="text-Sly-Text dark:text-gray-200">
         <DashboardHeader
           option={option}

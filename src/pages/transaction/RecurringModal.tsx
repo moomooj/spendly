@@ -85,7 +85,7 @@ export default function RecurringModal({
           </button>
         </div>
         {recurringMenu && (
-          <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl  z-10">
+          <div className=" bg-white dark:bg-Sly-grey-900 origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl  z-10">
             <div className="py-1">
               {recurringOptions.map((option) => (
                 <button
@@ -102,7 +102,7 @@ export default function RecurringModal({
       </div>
       {customMenu && (
         <div className="fixed w-full h-full inset-0 bg-gray-500/40 dark:bg-black/50 backdrop-blur-xs flex items-end z-30">
-          <div className="bg-Sly-bg w-full h-[30%] rounded-t-xl">
+          <div className="bg-Sly-bg dark:bg-Sly-grey-900 w-full h-[30%] rounded-t-xl">
             <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-Sly-grey-700">
               <button
                 onClick={() => {

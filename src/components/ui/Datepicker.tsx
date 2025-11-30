@@ -4,7 +4,7 @@ import "./datepicker-custom.css";
 
 interface DatepickerProps {
   setDateModal: (value: boolean) => void;
-  date: Date;
+  date: Date | null;
   setDate: (date: Date) => void;
 }
 

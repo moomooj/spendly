@@ -18,7 +18,7 @@ import { format } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";
 import Category from "./Category";
 
-import Datepicker from "./Datepicker";
+import Datepicker from "@/components/ui/Datepicker.tsx";
 import type { ICategory, IRecurring, PostTransaction } from "@/types/common";
 import RecurringModal from "./RecurringModal";
 

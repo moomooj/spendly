@@ -6,6 +6,7 @@ import Settings from "@/pages/settings/Settings";
 import Transaction from "@/pages/transaction/Transaction";
 import EditCategory from "@/pages/category/EditCategory";
 import InsightsDetail from "@/pages/insights/InsightDetail";
+import Goal from "./pages/goal/Goal";
 import NotFound from "@/pages/ErrorPage/NotFound";
 import ErrorPage from "@/pages/ErrorPage/ErrorPage";
 
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "insights", element: <Insights /> },
       { path: "insights/:id", element: <InsightsDetail /> },
+      { path: "goal", element: <Goal /> },
       { path: "settings", element: <Settings /> },
       { path: "settings/appearance", element: <AppearancePage /> },
       { path: "settings/notifications", element: <Notifications /> },

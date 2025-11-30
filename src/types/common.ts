@@ -103,3 +103,28 @@ export type TCurrency = {
   name: string;
   symbol: string;
 };
+
+export interface ICategoryInsight {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+  amount: number;
+  percentage: number;
+  transactionsCount: number;
+  averageTransaction: number;
+  transactions: ITransaction[];
+}
+
+export type GoalStatus = "progress" | "completed" | "stopped";
+
+export interface IGoalPost {
+  name: string;
+  status: GoalStatus;
+  type: InsightType;
+  startDate: Date;
+  endDate: Date;
+  note?: string;
+  goalAmount: number;
+  category: ICategoryInsight[];
+}

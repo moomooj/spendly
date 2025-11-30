@@ -14,8 +14,6 @@ export default function TransactionItem({
   });
   const navigate = useNavigate();
 
-  console.log(transaction);
-
   return (
     <div
       className="flex justify-between items-center py-3 cursor-pointer"
