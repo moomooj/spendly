@@ -126,5 +126,30 @@ export interface IGoalPost {
   endDate: Date;
   note?: string;
   goalAmount: number;
-  category: ICategoryInsight[];
+  categories: string[];
+}
+
+export interface IGoal {
+  id: number;
+  name: string;
+  status: GoalStatus;
+  type: "expense" | "income" | "total";
+  startDate: Date;
+  endDate: Date;
+  note?: string;
+  goalAmount: number;
+  categories: ICategoryInsight[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IGoalGET {
+  id: number;
+  name: string;
+  status: GoalStatus;
+  type: "expense" | "income" | "total";
+  startDate: Date;
+  endDate: Date;
+  goalAmount: number;
+  currentAmount: number;
 }

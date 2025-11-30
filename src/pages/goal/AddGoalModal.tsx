@@ -11,7 +11,8 @@ import {
 } from "@heroicons/react/24/outline";
 import Datepicker from "@/components/ui/Datepicker";
 import CategoryPicker from "./CategoryPicker";
-import type { InsightType } from "@/types/common";
+import type { IGoalPost, InsightType } from "@/types/common";
+import { useCreateGoal } from "./useGoal";
 
 interface AddGoalModalProps {
   isOpen: boolean;
@@ -19,6 +20,8 @@ interface AddGoalModalProps {
 }
 
 export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
+  const { mutate: createGoal, isPending } = useCreateGoal();
+
   const [goalName, setGoalName] = useState("");
   const [goalAmount, setGoalAmount] = useState("");
   const [goalType, setGoalType] = useState<InsightType>("total");
@@ -26,7 +29,7 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isStartDatePickerOpen, setIsStartDatePickerOpen] = useState(false);
   const [isEndDatePickerOpen, setIsEndDatePickerOpen] = useState(false);
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
   const [isCategoryPickerOpen, setIsCategoryPickerOpen] = useState(false);
   const [note, setNote] = useState("");
 
@@ -64,7 +67,26 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
       setEndDate(null);
       return;
     }
-    onClose();
+
+    if (!endDate) {
+      alert("Please select an end date.");
+      return;
+    }
+
+    const newGoal: IGoalPost = {
+      name: goalName.trim(),
+      goalAmount: parseFloat(goalAmount),
+      type: goalType,
+      status: "progress",
+      startDate: startDate,
+      endDate: endDate,
+      categories: selectedCategoryIds,
+      note: note,
+    };
+
+    createGoal(newGoal, {
+      onSuccess: () => onClose(),
+    });
   };
 
   if (!isOpen) return null;
@@ -81,7 +103,8 @@ export default function AddGoalModal({ isOpen, onClose }: AddGoalModalProps) {
         </h1>
         <button
           onClick={handleSubmit}
-          className="px-4 py-1.5 text-sm font-medium text-white bg-Sly-blue rounded-md hover:bg-Sly-blue-dark"
+          disabled={isPending}
+          className="px-4 py-1.5 text-sm font-medium text-white bg-Sly-blue rounded-md hover:bg-Sly-blue-dark disabled:bg-Sly-blue/50"
         >
           Save
         </button>

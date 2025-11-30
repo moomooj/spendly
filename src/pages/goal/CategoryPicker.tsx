@@ -6,8 +6,8 @@ import type { ICategory } from "@/types/common";
 interface CategoryPickerProps {
   isOpen: boolean;
   onClose: () => void;
-  initialSelectedIds: number[];
-  onDone: (ids: number[]) => void;
+  initialSelectedIds: string[];
+  onDone: (ids: string[]) => void;
 }
 
 export default function CategoryPicker({
@@ -17,7 +17,7 @@ export default function CategoryPicker({
   onDone,
 }: CategoryPickerProps) {
   const { data, isLoading, isError, error } = useCategories();
-  const [selectedIds, setSelectedIds] = useState<number[]>(initialSelectedIds);
+  const [selectedIds, setSelectedIds] = useState<string[]>(initialSelectedIds);
 
   useEffect(() => {
     if (isOpen) {
@@ -25,7 +25,7 @@ export default function CategoryPicker({
     }
   }, [isOpen, initialSelectedIds]);
 
-  const handleCategorySelect = (id: number) => {
+  const handleCategorySelect = (id: string) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((catId) => catId !== id) : [...prev, id]
     );
@@ -55,16 +55,20 @@ export default function CategoryPicker({
           {isError && <p>Error: {error.message}</p>}
           {data &&
             data.map((category: ICategory) => {
-              const isSelected = selectedIds.includes(category.id);
+              const isSelected = selectedIds.includes(category._id);
               return (
                 <button
-                  key={category.id}
-                  onClick={() => handleCategorySelect(category.id)}
-                  className={`w-full flex items-center justify-between p-3 rounded-lg mb-2 ${
-                    isSelected
-                      ? "bg-Sly-blue/20"
-                      : "hover:bg-gray-100 dark:hover:bg-Sly-grey-700"
+                  key={category._id}
+                  onClick={() => handleCategorySelect(category._id)}
+                  className={`w-full flex items-center justify-between p-3 rounded-lg mb-2 transition-colors ${
+                    !isSelected &&
+                    "hover:bg-gray-100 dark:hover:bg-Sly-grey-700"
                   }`}
+                  style={{
+                    backgroundColor: isSelected
+                      ? `${category.color}99`
+                      : "transparent",
+                  }}
                 >
                   <div className="flex items-center space-x-3">
                     <span className="text-2xl">{category.icon}</span>
@@ -73,7 +77,10 @@ export default function CategoryPicker({
                     </span>
                   </div>
                   {isSelected && (
-                    <CheckIcon className="w-5 h-5 text-Sly-blue" />
+                    <CheckIcon
+                      className="w-5 h-5"
+                      style={{ color: category.color }}
+                    />
                   )}
                 </button>
               );
